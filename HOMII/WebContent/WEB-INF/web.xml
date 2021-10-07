@@ -55,6 +55,15 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>PaymentServlet</servlet-name>
+    <servlet-class>com.payment.controller.PaymentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PaymentServlet</servlet-name>
+    <url-pattern>/pay/pay.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>RegServlet</servlet-name>
     <servlet-class>com.reg.controller.RegServlet</servlet-class>
   </servlet>

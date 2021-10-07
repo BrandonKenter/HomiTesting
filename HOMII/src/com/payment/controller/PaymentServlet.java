@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.bal.model.BalService;
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
 import com.payment.model.PaymentService;
 import com.payment.model.PaymentVO;
 
 
 @WebServlet("/PaymentServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class PaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +38,7 @@ public class PaymentServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setCharacterEncoding("UTF-8");
-		res.setContentType("text; charset=utf-8");
+		res.setContentType("text; charset=ISO-8859-1");
 		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action").trim();
 
@@ -99,6 +104,33 @@ public class PaymentServlet extends HttpServlet {
 			  finally {
 				out.flush();
 				out.close();
+			}
+		}
+		
+		if ("payFromTenant".equals(action)) { 
+			try {
+				int mb_no = new Integer(req.getParameter("member_no"));
+
+				Float price = new Float(req.getParameter("price").trim());
+				String type = req.getParameter("type").trim();
+				if (price < 0) {
+					return;
+				}
+				MemService memSvc = new MemService();
+				float curBal = memSvc.getOneMem(mb_no).getBalance();
+				memSvc.updateBalance(mb_no, curBal - price);
+				MemVO memVO = memSvc.getOneMem(mb_no);
+				
+				BalService balSvc = new BalService();
+				balSvc.addBal(mb_no, -1, type, price);
+				
+				req.setAttribute("memVO", memVO);
+				String url = "/front-end/bal/displayBalForTenant.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // after adding, forward to
+																				// listAllEmp.jsp
+				successView.forward(req, res);
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
 			}
 		}
 	

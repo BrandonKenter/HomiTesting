@@ -132,6 +132,11 @@ public class MemService {
 	 * dao.getAll(map); }
 	 */
 	
-	 
+	public void updateBalance(Integer mb_no, Float balance) {
+		MemVO membervo = new MemVO();
+		membervo.setMember_no(mb_no);
+		membervo.setBalance(balance);
+		dao.updateBalance(membervo);
+	}
 	
 }

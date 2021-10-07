@@ -6,18 +6,20 @@
 <%@ page import="com.comp.model.*"%>
 <%@ page import="com.mem.model.*"%>
 <%@ page import="com.reg.model.*"%>
+<%@ page import="com.bal.model.*"%>
+<%@ page import="com.payment.model.*"%>
 
 
-<jsp:useBean id="compSvc" scope="page" class="com.comp.model.CompService" />
+<jsp:useBean id="balSvc" scope="page" class="com.bal.model.BalService" />
+<jsp:useBean id="paySvc" scope="page" class="com.payment.model.PaymentService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 <jsp:useBean id="compDAO" scope="page" class="com.comp.model.CompDAO" />	
 <jsp:useBean id="memVO" scope="session" class="com.mem.model.MemVO" />
 <%
+
 	memVO = memSvc.getOneMem(memVO.getMember_no());
 	pageContext.setAttribute("memVO", memVO);
-	RegService regSvc = new RegService();
-	RegVO regVO = regSvc.getOneRegister(memVO.getMember_no());
-	pageContext.setAttribute("RegVO", regVO);
+
 %>
 <html>
 <head>
@@ -220,7 +222,26 @@ textarea.form-control {
   width: 200px;
   background-color: transparent;
   color: #fff;
+  position:relative;
+  bottom:-100px;
+  margin: 0 10px;
+}
 
+.price{
+  border-radius : 5px;
+  width: 115px;
+  margin: 0 10px;
+  position:relative;
+  bottom:-100px;
+  background-color:beige;
+}
+
+.payform{
+	height:170px;
+}
+
+.innerlog{
+	display:inline-block;
 }
 /* header */
 nav{
@@ -354,88 +375,71 @@ nav{
 <div class="row">
 	<div class="col-md-6">
 		<div class="balance" >
-			<h1>Your current balance is :</h1>
-			<br>
+			<h2>Your current balance is :</h2>
+			<br><br>
 			<div style="font-size:50px;">${memVO.balance}</div>
-			<br><br><br>
-			<a href="<%=request.getContextPath()%>/front-end/bal/displayBalForTenant.jsp"><input type="button" class="btn btn-primary submit" value="Make a payment"></a>
+			<br><br><br><br>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<section id="contact">
-			<h1>My Rent</h1>
-			<div class="form-group">
-		    	<label for="username">Apartment Name</label>
-		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getAp_name()%>" id="username"  disabled="disabled"></span>
-		  	</div>
-			<div class="form-group">
-		    	<label for="username">Apartment Address</label>
-		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getAp_address()%>" id="username"  disabled="disabled"></span>
-		  	</div>
-			<div class="form-group">
-		    	<label for="username">LandLord Name</label>
-		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getLand_name()%>" id="username"  disabled="disabled"></span>
-		  	</div>
-			<div class="form-group">
-		    	<label for="username">Status</label>
-		    	 <c:choose>
-                   <c:when test="${regVO.status == 0}">
-		    			 <span>Pending</span>
-                   </c:when>
-                   <c:when test="${regVO.status == 1}">
-                         <span>Approved</span>
-                   </c:when>
-                   <c:when test="${regVO.status == 2}">
-                         <span>Rejected</span>
-                   </c:when>
-                   <c:otherwise>
-                   		 <span>Pending</span>
-                   </c:otherwise>
-	            </c:choose>  
+			<h2>Choose a CreditCard</h2>
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pay/pay.do" class="payform" name="form2" enctype="multipart/form-data" data-toggle="validator">
+				<c:forEach var="payVO" items="${paySvc.getAllCard(memVO.member_no)}">	
+				<div class="form-group">
+			    	<input type="radio" id="inputcard_${payVO.pay_no}" name="pay_no" value="${payVO.pay_no}"> Card No : ${payVO.card_no}  ,  Exp : ${payVO.exp_mon}/${payVO.exp_year}
+			  	</div>
+			</c:forEach>
+		  	
+		  	<input type="hidden" name="action" value="payFromTenant">
+		  	<input type="hidden" name="type" value="2">
+		  	<input type="hidden" name="member_no" value="${memVO.member_no}">
+		  	<input type="text" class="price" name="price" placeholder="Enter the price"><input type="submit" id="submitBtn" class="btn btn-primary submit" value="Make a Payment">
 
-		  	</div>
-		  	<a href="<%=request.getContextPath()%>/front-end/reg/addReg.jsp"><input type="button" class="btn btn-primary submit" value="Register new rent"></a>
+		  	</FORM>
+		  	<p>If you ever register a credit card, please register <a href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">here</a></p>
 		</section>
 	</div>
-<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">All the cases</h1></div>
+<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Payment Log</h1></div>
+<div class="row">
 <table id="forum" class="table table-hover">
 	 <thead style="background-color:#126E7D">
 		<tr>		
-			<th>Apartment Name</th>
-			<th>Case Title</th>
-			<th>Status</th>
 			<th>Date</th>
+			<th>Name</th>
+			<th>Transaction Type</th>
+			<th>Price</th>
 		</tr>
 	</thead>
-	<c:forEach var="compVO" items="${compSvc.getAllCompByMemNo(memVO.member_no)}">		
+
+	<c:forEach var="balVO" items="${balSvc.getAllBalByMemNo(memVO.member_no)}">	
 		<tbody>
 			<tr>
-				<td>${compVO.ap_name}</td>
-
-				<td style=" font-size:large;">
-					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/comp/displayOneCompForTenate.jsp?complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
-									
-				</td>		
+				<td>${balVO.crt_dt}</td>
+				
+				<td>${memSvc.getOneMem(balVO.member_no).mb_name}</td>		
 			    <c:choose>
-                   <c:when test="${compVO.status==0}">
-                         <td>Pending</td>
+                   <c:when test="${balVO.type == 0}">
+                         <td>A LATE FEE</td>
                    </c:when>
-                   <c:when test="${compVO.status==1}">
-                         <td>Processing</td>
+                   <c:when test="${balVO.type == 1}">
+                         <td>CHECK A PAYMENT</td>
                    </c:when>
-                   <c:when test="${compVO.status==2}">
-                         <td>Solved</td>
+                   <c:when test="${balVO.type == 2}">
+                         <td>PAYMENT FROM TENANT</td>
                    </c:when>
                    <c:otherwise>
-                   		 <td>Invalid Status</td>
+                   		 <td>Invalid Type</td>
                    </c:otherwise>
 	            </c:choose>  
-				<td><fmt:formatDate value="${compVO.crt_dt}" pattern="yyyy-MM-dd HH:mm"/></td>
-
+				<td>${balVO.price}</td>
 			</tr>
 		</tbody>			
 	</c:forEach>
 </table>
+
+</div>
+
 </div>
 </div>
 </body>
@@ -443,6 +447,21 @@ nav{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
+$("#submitBtn").on("click", function () {
+	var sw = false;
+<c:forEach var="payVO" items="${paySvc.getAllCard(memVO.member_no)}">
+
+	var cardNo = $("#inputcard_${payVO.pay_no}");
+	
+
+	if (cardNo. == undefined){
+		Swal.fire('Please Login');
+	}
+
+
+</c:forEach>
+if
+})
 $(function(){
     var len = 50;
     $(".JQellipsis").each(function(i){

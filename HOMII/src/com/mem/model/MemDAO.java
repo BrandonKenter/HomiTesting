@@ -48,6 +48,8 @@ public class MemDAO implements MemDAO_interface {
 			"SELECT * FROM RELATIONSHIP where MEMBER_NO = ? order by MEMBER_NO and FRIEND_NO";
 	private static final String GET_PASSWORD = "SELECT * FROM member where mb_email = ?";
 	private static final String UPDATERANDOMPWD = "UPDATE MEMBER SET mb_pwd = ? WHERE mb_email = ?";
+	private static final String UPDATEBALANCE = "UPDATE MEMBER SET BALANCE = ? WHERE member_no = ?";
+	
 
 	public void insert(MemVO memVO) {
 		Connection con = null;
@@ -243,6 +245,7 @@ public class MemDAO implements MemDAO_interface {
 				memVO.setCrt_dt(rs.getDate("crt_dt"));
 				memVO.setStatus(rs.getString("status"));
 				memVO.setMembership(rs.getString("membership"));
+				memVO.setBalance(rs.getFloat("balance"));
 
 			}
 
@@ -303,6 +306,7 @@ public class MemDAO implements MemDAO_interface {
 				memVO.setCrt_dt(rs.getDate("crt_dt"));
 				memVO.setStatus(rs.getString("status"));
 				memVO.setMembership(rs.getString("membership"));
+				memVO.setBalance(rs.getFloat("balance"));
 				list.add(memVO); // Store the row in the list
 			}
 
@@ -478,6 +482,7 @@ public class MemDAO implements MemDAO_interface {
 				memVO.setCrt_dt(rs.getDate("crt_dt"));
 				memVO.setStatus(rs.getString("status"));
 				memVO.setMembership(rs.getString("membership"));
+				memVO.setBalance(rs.getFloat("balance"));
 			}
 		
 
@@ -681,6 +686,7 @@ public class MemDAO implements MemDAO_interface {
 				memVO.setMb_address(rs.getString("mb_address"));
 				memVO.setCrt_dt(rs.getDate("crt_dt"));
 				memVO.setStatus(rs.getString("membership"));
+				memVO.setBalance(rs.getFloat("balance"));
 
 			}
 
@@ -728,6 +734,38 @@ public class MemDAO implements MemDAO_interface {
 
 			pstmt.executeUpdate();
 			
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	public void updateBalance(MemVO membervo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(UPDATEBALANCE);
+
+			pstmt.setFloat(1, membervo.getBalance());
+			pstmt.setInt(2, membervo.getMember_no());
+
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {

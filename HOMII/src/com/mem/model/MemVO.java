@@ -14,6 +14,7 @@ public class MemVO implements java.io.Serializable{
 	private byte[] mb_pic;
 	private String status;
 	private String membership;
+	private float balance;
 	
 	
 	public MemVO () {};
@@ -93,6 +94,14 @@ public class MemVO implements java.io.Serializable{
 
 	public void setMembership(String membership) {
 		this.membership = membership;
+	}
+
+	public float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
 	}
 	
 	

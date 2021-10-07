@@ -21,6 +21,7 @@ public interface MemDAO_interface {
 	  public MemVO email_check(String mb_email);
 	  public MemVO getPassword(String mb_email);
 	  public void updateRandomPws(String mb_email, String mb_pwd);
+	  public void updateBalance(MemVO membervo);
 	/* public Set<RelationshipVO> getRelationshipsByMemberno(Integer member_no); */		  
 	/* public List<MemVO> getAll(Map<String, String[]> map); */
 }
