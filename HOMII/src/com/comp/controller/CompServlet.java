@@ -60,28 +60,28 @@ public class CompServlet extends HttpServlet{
 				mb_no = new Integer(memNo.trim());
 
 				String apName = req.getParameter("apName");
-				String apNameReg = "^[(a-zA-Z0-9_)(\\s)]{2,15}$"; // Regular Expression
+				String apNameReg = "^[(a-zA-Z0-9_)(\\s\\S)]{2,20}$"; // Regular Expression
 				if (apName == null || apName.trim().length() == 0) {
 					errorMsgs.add("Please enter member name");
 				} else if (!apName.trim().matches(apNameReg)) {
-					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 10");
+					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 20");
 				}
 
 				String landName = req.getParameter("landName");
-				String landNameReg = "^[(a-zA-Z0-9_)(\\s)]{2,30}$"; // Regular Expression
+				String landNameReg = "^[(a-zA-Z0-9_)(\\s\\S)]{2,20}$"; // Regular Expression
 				if (landName == null || landName.trim().length() == 0) {
 					errorMsgs.add("Please enter member name");
 				} else if (!landName.trim().matches(landNameReg)) {
-					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 10");
+					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 20");
 				}
 
 
 				String apAddress = req.getParameter("apAddress");
-				String apAddressReg = "^[(a-zA-Z0-9_)(\\s)]{1,1000}$";
+				String apAddressReg = "^[(a-zA-Z0-9_)(\\s\\S)]{1,100}$";
 				if (apAddress == null || apAddress.trim().length() == 0) {
 					errorMsgs.add("Please enter address");
 				} else if (!apAddress.trim().matches(apAddressReg)) {
-					errorMsgs.add("address can be only accepted in English and Digital number with length 2 - 30");
+					errorMsgs.add("address can be only accepted in English and Digital number with length 1 - 100");
 				}
 
 				String caseTitle = req.getParameter("caseTitle");
@@ -194,7 +194,7 @@ public class CompServlet extends HttpServlet{
 				}
 				CompService compSvc = new CompService();
 				compSvc.updateResponse(complaint_no, restype, response);
-				String url = "/front-end/index.jsp";
+				String url = "/front-end/comp/listAllCompForLand.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 	
 				successView.forward(req, res);

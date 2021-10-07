@@ -67,28 +67,28 @@ public class RegServlet extends HttpServlet {
 				mb_no = new Integer(memNo.trim());
 
 				String apName = req.getParameter("apName");
-				String apNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$"; // Regular Expression
+				String apNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)(\\s\\S)]{2,20}$"; // Regular Expression
 				if (apName == null || apName.trim().length() == 0) {
 					errorMsgs.add("Please enter member name");
 				} else if (!apName.trim().matches(apNameReg)) {
-					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 10");
+					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 20");
 				}
 
 				String landName = req.getParameter("landName");
-				String landNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$"; // Regular Expression
+				String landNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)(\\s\\S)]{2,20}$"; // Regular Expression
 				if (landName == null || landName.trim().length() == 0) {
 					errorMsgs.add("Please enter member name");
 				} else if (!landName.trim().matches(landNameReg)) {
-					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 10");
+					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 20");
 				}
 
 
 				String apAddress = req.getParameter("apAddress");
-				String apAddressReg = "^[(a-zA-Z0-9_)(\\s)]{1,1000}$";
+				String apAddressReg = "^[(a-zA-Z0-9_)(\\s\\S)]{1,100}$";
 				if (apAddress == null || apAddress.trim().length() == 0) {
 					errorMsgs.add("Please enter address");
 				} else if (!apAddress.trim().matches(apAddressReg)) {
-					errorMsgs.add("address can be only accepted in English and Digital number with length 2 - 30");
+					errorMsgs.add("address can be only accepted in English and Digital number with length 1 - 100");
 				}
 
 				Date start_dt;
@@ -103,7 +103,6 @@ public class RegServlet extends HttpServlet {
 					end_dt = java.sql.Date.valueOf(req.getParameter("end_dt").trim());
 				}catch (IllegalArgumentException e) {
 					end_dt= new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("Date format is incorrect!");
 				}
 				RegVO regVO = new RegVO();
 				regVO.setMember_no(mb_no);
@@ -116,7 +115,7 @@ public class RegServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("regVO", regVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/comp/addComp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/reg/addReg.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -137,7 +136,7 @@ public class RegServlet extends HttpServlet {
 				 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/comp/addComp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/reg/addReg.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -184,7 +183,7 @@ public class RegServlet extends HttpServlet {
 	
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("regVO", regVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/reg/displayOneRegForLand.jsp");
 					failureView.forward(req, res);
 					return;
 				}

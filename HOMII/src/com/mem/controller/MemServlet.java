@@ -64,11 +64,11 @@ public class MemServlet extends HttpServlet {
 				 * 1.catch requested parameter, do error handling
 				 *************************/
 				String mb_name = req.getParameter("mb_name");
-				String mb_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$"; // Regular Expression
+				String mb_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)(\\s\\S)]{2,20}$"; // Regular Expression
 				if (mb_name == null || mb_name.trim().length() == 0) {
 					errorMsgs.add("Please enter member name");
 				} else if (!mb_name.trim().matches(mb_nameReg)) {
-					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 10");
+					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 20");
 				}
 
 				String mb_email = req.getParameter("mb_email");
@@ -76,7 +76,7 @@ public class MemServlet extends HttpServlet {
 				if (mb_email == null || mb_email.trim().length() == 0) {
 					errorMsgs.add("Please enter email");
 				} else if (!mb_email.trim().matches(mb_emailReg)) {
-					errorMsgs.add("member email can be only accepted in English and Digital number with length 2 - 10");
+					errorMsgs.add("Your email format is incorrect");
 				}
 
 				String mb_pwd = req.getParameter("mb_pwd");
@@ -96,11 +96,11 @@ public class MemServlet extends HttpServlet {
 				}
 
 				String mb_address = req.getParameter("mb_address");
-				String mb_addressReg = "^[(a-zA-Z0-9_)(\\s)]{1,1000}$";
+				String mb_addressReg = "^[(a-zA-Z0-9_)(\\s\\S)]{1,100}$";
 				if (mb_address == null || mb_address.trim().length() == 0) {
 					errorMsgs.add("Please enter address");
 				} else if (!mb_address.trim().matches(mb_addressReg)) {
-					errorMsgs.add("address can be only accepted in English and Digital number with length 2 - 30");
+					errorMsgs.add("address can be only accepted in English and Digital number with length 1 - 100");
 				}
 
 				String membership = req.getParameter("membership");
@@ -161,87 +161,9 @@ public class MemServlet extends HttpServlet {
 			}
 		}
 
-		if ("getOne_For_Display".equals(action)) {
+	
 
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-
-				String str = req.getParameter("member_no");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("Please enter member no");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/mem/select_page.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				Integer member_no = null;
-				try {
-					member_no = new Integer(str);
-				} catch (Exception e) {
-					errorMsgs.add("The format is incorrect.");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/mem/select_page.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				MemService memSvc = new MemService();
-				MemVO memVO = memSvc.getOneMem(member_no);
-				if (memVO == null) {
-					errorMsgs.add("No data");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/mem/select_page.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				req.setAttribute("memVO", memVO);
-				String url = "/back-end/mem/listOneMem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-				successView.forward(req, res);
-
-			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/mem/select_page.jsp");
-				failureView.forward(req, res);
-			}
-		}
-
-		if ("getOne_For_Update".equals(action)) {
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				Integer member_no = new Integer(req.getParameter("member_no"));
-
-				MemService memSvc = new MemService();
-				MemVO memVO = memSvc.getOneMem(member_no);
-
-				req.setAttribute("memVO", memVO);
-				String url = "/front-end/mem/memberInfo.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-
-			} catch (Exception e) {
-				errorMsgs.add("Cannot retreat the data" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/mem/listAllMem.jsp");
-				failureView.forward(req, res);
-			}
-		}
+	
 
 		if ("update".equals(action)) {
 
@@ -254,11 +176,11 @@ public class MemServlet extends HttpServlet {
 				Integer member_no = new Integer(req.getParameter("member_no").trim());
 
 				String mb_name = req.getParameter("mb_name");
-				String mb_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$"; // Regular Expression
+				String mb_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)(\\s\\S)]{2,20}$"; // Regular Expression
 				if (mb_name == null || mb_name.trim().length() == 0) {
 					errorMsgs.add("Please enter member name");
 				} else if (!mb_name.trim().matches(mb_nameReg)) {
-					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 10");
+					errorMsgs.add("member name can be only accepted in English and Digital number with length 2 - 20");
 				}
 
 				String mb_email = req.getParameter("mb_email");
@@ -286,11 +208,11 @@ public class MemServlet extends HttpServlet {
 				}
 
 				String mb_address = req.getParameter("mb_address");
-				String mb_addressReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,30}$";
+				String mb_addressReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)(\\s\\S)]{1,100}$";
 				if (mb_address == null || mb_address.trim().length() == 0) {
 					errorMsgs.add("Please enter address");
 				} else if (!mb_address.trim().matches(mb_addressReg)) {
-					errorMsgs.add("phone can be only accepted in English and Digital number with length 2 - 30");
+					errorMsgs.add("phone can be only accepted in English and Digital number with length 1 - 100");
 				}
 
 
@@ -546,49 +468,6 @@ public class MemServlet extends HttpServlet {
 			}
 		}
 
-		/*
-		 * if ("listRelationships_ByMemberno_A".equals(action) ||
-		 * "listRelationships_ByMemberno_B".equals(action)) {
-		 * 
-		 * List<String> errorMsgs = new LinkedList<String>();
-		 * req.setAttribute("errorMsgs", errorMsgs);
-		 * 
-		 * try {
-		 *//***************************
-			 * 1.接收請求參數
-			 ****************************************/
-		/*
-		 * Integer member_no = new Integer(req.getParameter("member_no"));
-		 * 
-		 *//***************************
-			 * 2.開始查詢資料
-			 ****************************************/
-		/*
-		 * MemService memSvc = new MemService(); Set<RelationshipVO> set =
-		 * memSvc.getRelationshipsByMemberno(member_no);
-		 * 
-		 *//***************************
-			 * 3.查詢完成,準備轉交(Send the Success view)
-			 ************/
-		/*
-		 * req.setAttribute("listRelationships_ByMemno", set); //
-		 * 資料庫取出的list物件,存入request
-		 * 
-		 * String url = null; if ("listRelationships_ByMemberno_A".equals(action)) url =
-		 * "/front-end/relationship/select_page.jsp"; // 成功轉交
-		 * dept/listEmps_ByDeptno.jsp else if
-		 * ("listRelationships_ByMemberno_B".equals(action)) url =
-		 * "/front-end/mem/listRelationships_ByMemno.jsp"; // 成功轉交
-		 * dept/listAllDept.jsp
-		 * 
-		 * RequestDispatcher successView = req.getRequestDispatcher(url);
-		 * successView.forward(req, res);
-		 * 
-		 *//***************************
-			 * 其他可能的錯誤處理
-			 ***********************************//*
-													 * } catch (Exception e) { throw new ServletException(e); } }
-													 */
 
 		if ("forgot_password".equals(action)) {
 
@@ -645,47 +524,6 @@ public class MemServlet extends HttpServlet {
 			}
 		}
 
-		/*
-		 * if ("listMems_ByCompositeQuery".equals(action)) { List<String> errorMsgs =
-		 * new LinkedList<String>(); // Store this set in the request scope, in case we
-		 * need to // send the ErrorPage view. req.setAttribute("errorMsgs", errorMsgs);
-		 * 
-		 * try {
-		 * 
-		 *//***************************
-			 * 1.將輸入資料轉為Map
-			 **********************************/
-		/*
-		 * // 採用Map<String,String[]> getParameterMap()的方法 // 注意:an immutable
-		 * java.util.Map // Map<String, String[]> map = req.getParameterMap();
-		 * HttpSession session = req.getSession(); Map<String, String[]> map =
-		 * (Map<String, String[]>) session.getAttribute("map"); // 以下的 if
-		 * 區塊只對第一次執行時有效 if (req.getParameter("whichPage") == null) {
-		 * Map<String, String[]> map1 = new HashMap<String,
-		 * String[]>(req.getParameterMap()); session.setAttribute("map", map1); map =
-		 * map1; }
-		 *//***************************
-			 * 2.開始複合查詢
-			 ***************************************/
-		/*
-		 * MemService memSvc = new MemService(); List<MemVO> list = memSvc.getAll(map);
-		 *//***************************
-			 * 3.查詢完成,準備轉交(Send the Success view)
-			 ************/
-		/*
-		 * req.setAttribute("listMems_ByCompositeQuery", list); //
-		 * 資料庫取出的list物件,存入request RequestDispatcher successView = req
-		 * .getRequestDispatcher("/front-end/mem/listMems_ByCompositeQuery.jsp"); //
-		 * 成功轉交listMems_ByCompositeQuery.jsp successView.forward(req, res);
-		 * 
-		 *//***************************
-			 * 其他可能的錯誤處理
-			 **********************************//*
-												 * } catch (Exception e) { errorMsgs.add(e.getMessage());
-												 * RequestDispatcher failureView =
-												 * req.getRequestDispatcher("/front-end/mem/addMem.jsp");
-												 * failureView.forward(req, res); } }
-												 */
 
 		if ("update_for_Ajax".contentEquals(action)) {
 			List<String> errorMsgs = new ArrayList<String>();

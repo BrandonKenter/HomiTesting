@@ -166,6 +166,15 @@ textarea.form-control {
 	                         </c:otherwise>
 	                    </c:choose> 
                     </li>
+                    <li class="nav-item">
+	                    <c:choose>
+	                         <c:when test="${memVO.membership == 1 }">
+	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                         </c:when>
+	                         <c:otherwise>
+	                         </c:otherwise>
+	                    </c:choose>    	
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Our Services</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

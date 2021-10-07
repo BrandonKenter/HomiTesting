@@ -4,7 +4,8 @@
 <%@ page import="com.apt.model.*"%>
 
 <%
-
+	AptVO aptVO = (AptVO)request.getAttribute("aptVO");
+	MemVO memVO = (MemVO)session.getAttribute("memVO");
 %>
 
 <!DOCTYPE html>
@@ -24,7 +25,7 @@
 body{
 	margin:0;
 	color:#6a6f8c;
-	background-image:url("<%=request.getContextPath()%>/img/complaint form.jpg");
+	background-image:url("<%=request.getContextPath()%>/img/apt6.jpg");
 	background-size:100%;
 	font:600 16px/18px 'Open Sans',sans-serif;
 }
@@ -39,7 +40,6 @@ a{color:inherit;text-decoration:none}
 	max-width:525px;
 	min-height:920px;
 	position:relative;
-	background:url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
 	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 .login-html{
@@ -47,7 +47,7 @@ a{color:inherit;text-decoration:none}
 	height:100%;
 	position:absolute;
 	padding:90px 70px 50px 70px;
-	background:rgba(40,57,101,.9);
+	background:rgba(40,80,136,.9);
 }
 .login-html .sign-in-htm,
 .login-html .sign-up-htm{
@@ -216,21 +216,18 @@ a{color:inherit;text-decoration:none}
 
 <div class="login-wrap">
 	<div class="login-html">
-		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Register an Apartment</label>
 		<div class="login-form">
-		
-		
-			
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/apt/apt.do" name="form2" enctype="multipart/form-data" data-toggle="validator">
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/apt/apt.do" name="form2" enctype="multipart/form-data" data-toggle="validator">
 			<div class="sign-up-htm">
 				<div class="group form-group">
 					<label for="name" class="label">Apartment Name</label>
-					<input id="name" type="text"  name="ap_name" class="input" value="<%= (aptVO==null)? "" : aptVO.getAp_name()%>" data-error="Please enter English or Digital number" required="required" autocomplete="off">
+					<input id="name" type="text"  name="ap_name" class="input" value="<%= (aptVO==null)? "" : aptVO.getAp_name()%>" data-error="Please enter apartment name" required="required" autocomplete="off">
 				<div class="help-block with-errors"></div>
 				</div>
 				<div class="group form-group">
 					<label for="email" class="label">Apartment Address</label>
-					<input id="email" type="text" name="ap_address" class="input" value="<%= (aptVO==null)? "" : aptVO.getAp_address()%>" data-error="Please enter email"  required="required" autocomplete="off">
+					<input id="email" type="text" name="ap_address" class="input" value="<%= (aptVO==null)? "" : aptVO.getAp_address()%>" data-error="Please enter address"  required="required" autocomplete="off">
 				<div class="help-block with-errors"></div>
 				</div>
 				<div class="group">
@@ -248,49 +245,21 @@ a{color:inherit;text-decoration:none}
 				<div class="group">
 					<input type="hidden" name="member_no" value="<%=memVO.getMember_no()%>">
 					<input type="hidden" name="action" value="insert">
-					<input type="submit" id="btn" class="button" value="Sign Up">
+					<input type="submit" id="btn" class="button" value="Register">
 				
 				</div>
-				<div class="hr"></div>
 			</div>
+			</FORM>
 		</div>
 	</div>
 </div>
-</FORM>
-
-
 
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 
-
-
 </body> 
-<script src="<%=request.getContextPath()%>/js/city_area.js"></script>
-<script type="text/javascript">
- window.onload = function () {
-       AddressSeleclList.Initialize('city', 'area');
-   };
-
-</script>
-
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
-</style>
-
 
 </html>

@@ -6,9 +6,11 @@
 <%@ page import="com.comp.model.*"%>
 <%@ page import="com.mem.model.*"%>
 <%@ page import="com.reg.model.*"%>
+<%@ page import="com.apt.model.*"%>
 
 	<jsp:useBean id="compSvc" scope="page" class="com.comp.model.CompService" />
 	<jsp:useBean id="regSvc" scope="page" class="com.reg.model.RegService" />
+	<jsp:useBean id="aptSvc" scope="page" class="com.apt.model.AptService" />
 	<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 	<jsp:useBean id="compDAO" scope="page" class="com.comp.model.CompDAO" />	
 	<jsp:useBean id="memVO" scope="session" class="com.mem.model.MemVO" />
@@ -129,6 +131,19 @@ table#forum.table>tbody>tr>td>a.JQellipsis
 .forum-nav>ul.nav.nav-pills>li>a.toggle{
 	font-weight:700;
 }
+
+.addApt{
+  font-size: 1.1em;
+  width: 170px;
+  background-color: transparent;
+  color: #fff;
+  position:relative;
+  left:1240px;
+  margin-top:10px;
+  border-color:cadetblue;
+  border-radius:50px;
+
+}
 /* header */
 nav{
 	background-color: #4a3b3b;
@@ -184,6 +199,15 @@ nav{
 	                         </c:otherwise>
 	                    </c:choose> 
                     </li>
+                    <li class="nav-item">
+	                    <c:choose>
+	                         <c:when test="${memVO.membership == 1 }">
+	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                         </c:when>
+	                         <c:otherwise>
+	                         </c:otherwise>
+	                    </c:choose>    	
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Our Services</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -226,7 +250,7 @@ nav{
 						</c:when>
 						<c:otherwise>
 								<img src="${pageContext.request.contextPath}/mem/DBGifReader4.do?member_no=${memVO.member_no}" 
-									id="${memVO.member_no}" alt=" width="60px;" height="60px" 
+									id="${memVO.member_no}" alt=" width="50px;" height="50px" 
 									class="clickable" />
 								<a class="text-white" id="welcome"> ${memVO.mb_name} &nbsp</a>
 								<a id="logout-btn" href="<%=request.getContextPath()%>/front-end/mem/MemLogout.jsp"> Logout </a>
@@ -250,8 +274,80 @@ nav{
 	</ul>
 </c:if>
 
-<a href="<%=request.getContextPath()%>/front-end/apt/addApt.jsp">Add an Apartment</a>
-	<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Complaint cases</h1></div>
+<a href="<%=request.getContextPath()%>/front-end/apt/addApt.jsp"><button class="btn-success addApt">Add an Apartment</button></a>
+
+<div class="row">
+<div class="col-md-6">
+<div style="text-align:center;"><h3 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Applications for your property</h3></div>
+	<table id="forum" class="table table-hover">
+	 <thead style="background-color:#126E7D">
+		<tr>		
+			<th>Apartment Name</th>
+			<th>Tenant</th>
+			<th>Status</th>
+			<th>Start Date</th>
+		</tr>
+	</thead>
+	<c:forEach var="regVO" items="${regSvc.getAllRegisterByLandName(memVO.mb_name)}">		
+		<tbody>
+			<tr>
+
+				<td style=" font-size:large;">
+					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/reg/displayOneRegForLand.jsp?reg_no=${regVO.reg_no}">${regVO.ap_name}</a>
+									
+				</td>		
+				
+				<td>${memSvc.getOneMem(regVO.member_no).mb_name}</td>		
+			    <c:choose>
+                   <c:when test="${regVO.status==0}">
+                         <td>Pending</td>
+                   </c:when>
+                   <c:when test="${regVO.status==1}">
+                         <td>Approved</td>
+                   </c:when>
+                   <c:when test="${regVO.status==2}">
+                         <td>Rejected</td>
+                   </c:when>
+                   <c:otherwise>
+                   		 <td>Invalid Status</td>
+                   </c:otherwise>
+	            </c:choose>  
+				<td><fmt:formatDate value="${regVO.start_dt}" pattern="yyyy-MM-dd HH:mm"/></td>
+
+			</tr>
+		</tbody>			
+	</c:forEach>
+</table>
+</div>
+<div class="col-md-6">
+<div style="text-align:center;"><h3 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Your property</h3></div>
+<table id="forum" class="table table-hover">
+	 <thead style="background-color:#126E7D">
+		<tr>		
+			<th>Apartment Name</th>
+			<th>Apartment Address</th>
+			<th>Rating</th>
+		</tr>
+	</thead>
+	<c:forEach var="aptVO" items="${aptSvc.getAllAptByMemNo(memVO.member_no)}">		
+		<tbody>
+			<tr>
+
+				<td style=" font-size:large;">
+					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/apt/displayOneAptForLand.jsp?ap_no=${aptVO.ap_no}">${aptVO.ap_name}</a>			
+				</td>		
+				<td>${aptVO.ap_address}</td>		
+				<td>${aptVO.rating}</td>		
+			</tr>
+		</tbody>			
+	</c:forEach>
+</table>
+</div>
+</div>	
+
+<br><br><br><br><br><br>
+	
+<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Complaint cases</h1></div>
 <div class="row">
 <table id="forum" class="table table-hover">
 	 <thead style="background-color:#126E7D">
@@ -295,49 +391,6 @@ nav{
 	</c:forEach>
 </table>
 
-</div>
-<br><br><br><br><br><br>
-	<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Applications for your property</h1></div>
-<div class="row">
-<table id="forum" class="table table-hover">
-	 <thead style="background-color:#126E7D">
-		<tr>		
-			<th>Apartment Name</th>
-			<th>Tenant</th>
-			<th>Status</th>
-			<th>Date</th>
-		</tr>
-	</thead>
-	<c:forEach var="regVO" items="${regSvc.getAllRegisterByLandName(memVO.mb_name)}">		
-		<tbody>
-			<tr>
-
-				<td style=" font-size:large;">
-					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/reg/displayOneRegForLand.jsp?reg_no=${regVO.reg_no}">${regVO.ap_name}</a>
-									
-				</td>		
-				
-				<td>${memSvc.getOneMem(regVO.member_no).mb_name}</td>		
-			    <c:choose>
-                   <c:when test="${regVO.status==0}">
-                         <td>Pending</td>
-                   </c:when>
-                   <c:when test="${regVO.status==1}">
-                         <td>Approved</td>
-                   </c:when>
-                   <c:when test="${regVO.status==2}">
-                         <td>Rejected</td>
-                   </c:when>
-                   <c:otherwise>
-                   		 <td>Invalid Status</td>
-                   </c:otherwise>
-	            </c:choose>  
-				<td><fmt:formatDate value="${regVO.start_dt}" pattern="yyyy-MM-dd HH:mm"/></td>
-
-			</tr>
-		</tbody>			
-	</c:forEach>
-</table>
 </div>
 </div>
 

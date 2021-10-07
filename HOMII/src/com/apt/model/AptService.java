@@ -1,5 +1,7 @@
 package com.apt.model;
 
+import java.util.List;
+
 import com.comp.model.CompVO;
 import com.mem.model.MemVO;
 
@@ -34,5 +36,8 @@ public class AptService {
 		dao.insert(aptVO);
 		
 		return aptVO;
+	}
+	public List<AptVO> getAllAptByMemNo(Integer member_no){
+		return dao.getAllByMemNo(member_no);
 	}
 }

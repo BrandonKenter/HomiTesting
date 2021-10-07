@@ -103,7 +103,7 @@ public class AptServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("aptVO", aptVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/mem/MemLogin.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/apt/addApt.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -117,8 +117,7 @@ public class AptServlet extends HttpServlet {
 				/***************************
 				 * 3.Added, prepare to forward(Send the Success view)
 				 ***********/
-				successMsgs.add(
-						"");
+
 				String url = "/front-end/comp/listAllCompForLand.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // after adding, forward to
 																				// listAllEmp.jsp
@@ -129,7 +128,7 @@ public class AptServlet extends HttpServlet {
 				 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/mem/MemLogin.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/apt/addApt.jsp");
 				failureView.forward(req, res);
 			}
 		}

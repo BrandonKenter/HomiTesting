@@ -32,7 +32,7 @@
 <title>Insert title here</title>
 <style>
 body{
-  background-image: url("<%=request.getContextPath()%>/img/furniture.jpg");
+  background-image: url("<%=request.getContextPath()%>/img/lampcut.jpg");
   background-size:100%;
 }
 .content-header{
@@ -159,6 +159,15 @@ nav{
 	                         	</c:choose>
 	                         </c:otherwise>
 	                    </c:choose> 
+                    </li>
+                    <li class="nav-item">
+	                    <c:choose>
+	                         <c:when test="${memVO.membership == 1 }">
+	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                         </c:when>
+	                         <c:otherwise>
+	                         </c:otherwise>
+	                    </c:choose>    	
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Our Services</a>
