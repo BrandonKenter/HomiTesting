@@ -4,15 +4,15 @@
 A README in general provides general info about the project, with detailed set-up and usage instructions. For the spike exercise, just a detailed guide on how to set up the app and run it is sufficient. Basically, explain how i can run the app on my system to evaluate your submission
 */
 
-**Intro**
+## Intro
 
 Our full stack is as below, so we have to install & setup the related applications.
 
-        F/E                            B/E
-Java script/html/css -> java -- JDBC (link by Tomcat) -- MySQL
+            F/E                            B/E
+    Java script/html/css -> java -- JDBC (link by Tomcat) -- MySQL
 
 
-**Set up**
+## Set up instruction
 
 1.MySQL setup
 
@@ -20,9 +20,9 @@ Java script/html/css -> java -- JDBC (link by Tomcat) -- MySQL
 
 1.2	Download my.ini file and move it to MySQL 8.0.19 directory (Download my.ini: http://tiny.cc/jg1kuz)
 
-1.3	To access MySQL directory: right-click on Finder choose go to file 
+1.3	To access MySQL directory: right-click on "Finder" -> "go to file"
 
-and type the path: "/usr/local/mysql-8.0.19-macos10.15-x86_64"
+-> type the path: "/usr/local/mysql-8.0.19-macos10.15-x86_64"
 
 1.4	Open terminal -> input command "echo $SHELL" -> check shell type is bash or zsh
 
@@ -38,7 +38,7 @@ and type the path: "/usr/local/mysql-8.0.19-macos10.15-x86_64"
 
 export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 
-![image](https://user-images.githubusercontent.com/91846668/136494662-318c5081-80a0-4bfc-a860-aa052d34d2e6.png)
+![image](https://user-images.githubusercontent.com/91846668/136631020-7add756f-25bd-4d76-ad15-ae4591187b52.png)
  
 1.7	Go to terminal use command “mysqld --initialize –console” to initialize MySQL
 
@@ -74,7 +74,7 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 
 ![image](https://user-images.githubusercontent.com/91846668/136495072-74191733-237f-46ae-8a96-1138f1d8d4ea.png)
 
-2.	Eclipse & tomcat setup
+2.Eclipse & tomcat setup
 	
 2.1 install Eclipse EE (Download Eclipse: http://tiny.cc/ug1kuz)
 
@@ -88,7 +88,7 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 
 2.5 Go to preference to set up Tomcat connection 
 
-![image](https://user-images.githubusercontent.com/91846668/136495232-ee6aa244-6930-45f9-808b-cb3642a9bac5.png)
+![image](https://user-images.githubusercontent.com/91846668/136631122-a5b5d9dc-bffe-4b63-a420-36002c1f2642.png)
  
 Click add to add server
 
@@ -110,7 +110,6 @@ Choose tomcat directory which would be in your eclipse workplace folder for this
  
 ![image](https://user-images.githubusercontent.com/91846668/136495726-d87dd890-406f-4f67-8564-32d71dea6bdc.png)
 
-![image](https://user-images.githubusercontent.com/91846668/136495731-a112e988-b099-4435-adad-914cdca4a0ea.png)
 
 2.7 Exceptions: 
 
@@ -125,3 +124,146 @@ There may still have error after doing the procedure above, if it is, please che
 *Check if the JRE Library is JavaSE 1.8 -> if not, edit it to correct version
  
 ![image](https://user-images.githubusercontent.com/91846668/136495868-f62c9b8f-f265-4c49-96d6-c9d257a7aebc.png)
+
+
+## Usage instruction
+
+There are three required functions for this spike exercise: 
+
+* 1.Entering an application to rent a property. 
+
+  * a. Potential renters who would like to apply can create (or log into) an account, enter their information into a preliminary application, and submit it to rental owners. 
+
+  * b. Rental owners can accept or reject submitted application.
+
+* 2.Paying rent.
+
+  * a. Your team can simulate a payment system by having users enter FAKE payment information and the system displaying a confirmation message.
+
+  * b. Every tenant will be able to view their balance on the system.
+
+  * c. Owners can add late fees or penalties.
+
+  * d. Owners can also enter payment through their admin accounts.
+
+* 3.Entering notices for maintenance.
+
+  * a. Tenants (logged in) can input a maintenance request and whether it is a priority.
+
+  * b. Owners can review and respond to maintenance requests.
+
+Instructions:
+
+- [x] **1.a create an account**
+
+Click Login button on the up-right corner
+
+![image](https://user-images.githubusercontent.com/91846668/136628541-852e0203-a741-4ddf-b1e1-ce8a871023ef.png)
+
+Log in
+
+![image](https://user-images.githubusercontent.com/91846668/136628739-859d2ec1-02e9-475c-ab6c-28c6c5044c53.png)
+
+*if you forget your password, you can click forget password and you’ll receive a random password via your email, then go to member center change your password.
+
+Sign up
+
+Click sign up -> fill up the information -> Click sign up button below
+
+*The member type you register is important, it would be different privilege between two roles.
+
+*It would show error message if the data formation not as expected.
+
+![image](https://user-images.githubusercontent.com/91846668/136628764-062b601c-28f7-4602-9264-8799f887edf2.png)
+
+Send rental application
+
+-> Click “My Rent” to view the rental status -> Click “Register new rent” to apply a new rental
+
+![image](https://user-images.githubusercontent.com/91846668/136628787-e81afaa8-8267-4f10-ac94-29e7f94998e6.png)
+
+-> fill up and send the form and the owner will review the application
+
+![image](https://user-images.githubusercontent.com/91846668/136628798-c61b3926-b464-409e-9930-119c68a3ce42.png)
+
+(Extra function) In “My rent” page, tenant can select opened cases to review the status
+
+![image](https://user-images.githubusercontent.com/91846668/136628810-c7605c44-e247-4b39-a98e-6184eb7cb9fc.png)
+
+
+- [x] **1.b Owner review the rental application**
+
+Once the tenant sent an application, rental owner can get the application in his/her “My property” page.
+
+-> Click the application you want to review
+
+![image](https://user-images.githubusercontent.com/91846668/136628856-4c1415cb-b5ef-4ccb-85fe-282442bae6ce.png)
+ 
+-> Review the application and select approve or reject 
+
+*End data is must be filled.
+
+![image](https://user-images.githubusercontent.com/91846668/136628867-06021ebf-eb94-4082-8cc8-7a3c60983dcf.png)
+ 
+- [x] **2.a Set payment system**
+
+Go to XXX to add the credit card information 
+
+(it would show error message if the data format is not as expected)
+
+![image](https://user-images.githubusercontent.com/91846668/136628945-6a119bae-4126-48fc-86e7-440441db8c58.png)
+
+- [x] **2.b View balance**
+
+Click “My rent” to view the current balance
+
+-> Click “make payment” -> Choose a registered credit card can make payment
+
+*You can see the payment log once after you make payment.
+
+![image](https://user-images.githubusercontent.com/91846668/136628968-3cace25f-1ab6-4286-965c-02a0a9f67224.png)
+
+- [x] **2.c owner add late fees or penalties**
+
+(log in owner account, mail: land1@wisc.edu password:1111)
+
+Click “Payment System” -> select the tenant who you want to add penalties to -> select penalty enter the amount
+
+*Once the amount sent, it would be shown in payment log.
+
+![image](https://user-images.githubusercontent.com/91846668/136628981-2a91c110-6b1b-4c01-803f-97fc790b41de.png)
+
+- [x] **2.d owner enter payment (same page as above)**
+
+(log in owner account, mail: land1@wisc.edu password:1111)
+
+Click “Payment System” -> select the tenant who makes the payment -> select payment -> enter the amount
+
+*Once the amount sent, it would be shown in payment log.
+
+
+
+- [x] **3.a Open a maintenance request**
+
+Click the create case on the up-right corner 
+-> fill up the information needed (description, photo, video, etc) 
+-> the priority box can define the urgency
+
+![image](https://user-images.githubusercontent.com/91846668/136629015-10b50d36-13e2-4a88-b221-14dc4540133a.png)
+ 
+- [x] **3.b Owner review & response to requests**
+
+Click My property (all the apartment and case below to the landlord would be shown in this page) 
+
+-> click the case you want to read
+
+![image](https://user-images.githubusercontent.com/91846668/136629036-cbd66f19-7463-4cae-bff4-a29fbcb8c088.png)
+
+-> read the details and response to it
+
+![image](https://user-images.githubusercontent.com/91846668/136629062-3e42e3cb-49be-4e80-b405-51426b45322c.png)
+
+(Extra function) Landlord can click “add an apartment” on the up-right corner to register a new apartment
+
+![image](https://user-images.githubusercontent.com/91846668/136629103-d2e38848-c825-4dcc-aa09-25081e391e31.png)
+
