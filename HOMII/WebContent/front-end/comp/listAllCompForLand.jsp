@@ -29,6 +29,7 @@
 	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, "Lucida Grande", "PingFang TC", "Apple LiGothic Medium", sans-serif;
 	  background-image: url("<%=request.getContextPath()%>/img/complaint form.jpg");
   background-size:100%;
+    background-attachment:fixed;
  	        }  
   table#table-1 {
 	background-color: #CCCCFF;
@@ -202,7 +203,7 @@ nav{
                     <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
-	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                          <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
 	                         </c:when>
 	                         <c:otherwise>
 	                         </c:otherwise>
@@ -356,6 +357,7 @@ nav{
 			<th>Case Title</th>
 			<th>Tenant</th>
 			<th>Status</th>
+			<th>Priority</th>
 			<th>Date</th>
 		</tr>
 	</thead>
@@ -384,6 +386,7 @@ nav{
                    		 <td>Invalid Status</td>
                    </c:otherwise>
 	            </c:choose>  
+	            <td>${compVO.priority}</td>
 				<td><fmt:formatDate value="${compVO.crt_dt}" pattern="yyyy-MM-dd HH:mm"/></td>
 
 			</tr>

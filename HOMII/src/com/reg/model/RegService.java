@@ -41,6 +41,9 @@ public class RegService {
 	public List<RegVO> getAllRegisterByLandName(String land_name){
 		return dao.getAllByLandName(land_name);
 	}
+	public List<RegVO> getAllRegisterByLandNameWithApproval(String land_name){
+		return dao.getAllByLandNameWithApproval(land_name);
+	}
 	public RegVO updateResponse(Integer reg_no, String ap_name, String ap_address, Date start_dt, Date end_dt, String restype) {
 		RegVO regVO = new RegVO();
 		regVO.setReg_no(reg_no);

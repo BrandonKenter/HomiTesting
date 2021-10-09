@@ -48,6 +48,7 @@ body {
 
   background-image: url("<%=request.getContextPath()%>/img/complaint form.jpg");
   background-size:100%;
+  	background-attachment:fixed;
 }
 
 #contact button{
@@ -167,7 +168,7 @@ textarea.form-control {
                     <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
-	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                          <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
 	                         </c:when>
 	                         <c:otherwise>
 	                         </c:otherwise>
@@ -277,20 +278,20 @@ textarea.form-control {
 					    	<label for="landname">Landlord Name</label>
 					    	<span><input type="text" class="form-control" name="landName" value="" id="landname" placeholder=" Enter Landlord Name" ></span>
 			  			</div>
-			  			<div class="form-group">
-					    	<label for="photo">Apartment Photo</label>
-					    	<span></span>
-			  			</div>	
 			  		</div>
 			  		<div class="col-md-6">
 			  		<p>Case Info</p>
 			  			<div class="form-group">
 			  				<label for="title">Case title</label>
-					    	<span><input type="text" class="form-control" name="caseTitle" id="title" placeholder=" Enter Case title"></span>
+					    	<span><input type="text" class="form-control" name="caseTitle" id="title" placeholder=" Enter Case Title"></span>
 				  		</div>
 			  			<div class="form-group">
-			  				<label for ="description"> Description</label>
+			  				<label for ="description">Description</label>
 			  			 	<span><textarea  class="form-control" name="description" id="description" placeholder="Enter Case Description "></textarea></span>
+			  			</div>
+			  			<div class="form-group">
+			  				<label for ="priority">Priority (0-5:urgent)</label>
+			  			 	<span><input type="text" class="form-control" name="priority" id="priority" placeholder=" Enter Case Priority"></span>
 			  			</div>
 			  			<div class="form-group">
 			  				<label for="photo">Photo</label>
@@ -319,6 +320,18 @@ textarea.form-control {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
+
+$("#priority").change(function(){
+	var p = $("#priority").val();
+	console.log(parseInt(p));
+	if (isNaN(parseInt(p))){
+		Swal.fire('Please enter digit only');
+	}
+	if (parseInt(p) > 5 || parseInt(p) < 0){
+		Swal.fire('Priority range is 0 ~ 5');
+	}
+	
+})
 for (var i = 0; i < images.length; i++) { var image = images[i], width = String(image.currentStyle.width); if (width.indexOf('%') == -1) { continue; } image.origWidth = image.offsetWidth; image.origHeight = image.offsetHeight; imgCache.push(image); c.ieAlpha(image); image.style.width = width; }
 </script>
 </body>

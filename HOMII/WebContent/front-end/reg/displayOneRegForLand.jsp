@@ -55,6 +55,7 @@ body {
 
   background-image: url("<%=request.getContextPath()%>/img/complaint form.jpg");
   background-size:100%;
+    background-attachment:fixed;
 }
 
 #contact button{
@@ -174,7 +175,7 @@ textarea.form-control {
                     <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
-	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                        <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
 	                         </c:when>
 	                         <c:otherwise>
 	                         </c:otherwise>
@@ -374,7 +375,7 @@ $('#f_date2').datetimepicker({
    timepicker:false,       //timepicker:true,
    step: 1,                //step: 60 
    format:'Y-m-d',         //format:'Y-m-d H:i:s',
-   value: '', // value:   new Date(),
+   value: '<%=regVO.getEnd_dt()%>', // value:   new Date(),
 //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 
 //startDate:	            '2017/07/10',  //
 minDate : '-1970-01-01', // 

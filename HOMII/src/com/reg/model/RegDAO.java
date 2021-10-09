@@ -149,6 +149,8 @@ public class RegDAO implements RegDAO_interface{
 				regVO.setAp_address(rs.getString("ap_address"));
 				regVO.setLand_name(rs.getString("land_name"));
 				regVO.setStatus(rs.getString("status"));
+				regVO.setStart_dt(rs.getDate("start_dt"));
+				regVO.setEnd_dt(rs.getDate("end_dt"));
 			}
 			
 			// Handle any driver errors
@@ -271,6 +273,68 @@ public class RegDAO implements RegDAO_interface{
 				list.add(regVO); // Store the row in the list
 			}
 
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<RegVO> getAllByLandNameWithApproval(String land_name) {
+		List<RegVO> list = new ArrayList<RegVO>();
+		RegVO regVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_STMT_BY_LANDNAME);
+			pstmt.setString(1, land_name);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				regVO = new RegVO();
+				regVO.setReg_no(rs.getInt("reg_no"));
+				regVO.setMember_no(rs.getInt("member_no"));
+				regVO.setAp_name(rs.getString("ap_name"));
+				regVO.setAp_address(rs.getString("ap_address"));
+				regVO.setLand_name(rs.getString("land_name"));
+				regVO.setStatus(rs.getString("status"));
+				regVO.setStart_dt(rs.getDate("start_dt"));
+				
+				if(regVO.getStatus().equals("1")) {
+					list.add(regVO); // Store the row in the list
+				}
+
+			}
+			
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

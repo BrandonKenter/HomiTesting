@@ -9,4 +9,5 @@ public interface RegDAO_interface {
 	public List<RegVO> getAllByMemNo(Integer member_no);
 	public List<RegVO> getAllByLandName(String land_name);
 	public void updateRes(RegVO regVO);
+	public List<RegVO> getAllByLandNameWithApproval(String land_name);
 }

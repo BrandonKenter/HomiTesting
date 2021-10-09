@@ -2,6 +2,7 @@ package com.bal.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,8 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.bal.model.BalService;
 import com.bal.model.BalVO;
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
 
 
 /**
@@ -103,6 +109,39 @@ public class BalServlet extends HttpServlet {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/bal/addBal.jsp");
 				failureView.forward(req, res);
+			}
+		}
+		
+		if("showTenBal".equals(action)) {
+
+			PrintWriter out = res.getWriter();
+			try {
+				System.out.println("1111");
+				int tenant_no = new Integer(req.getParameter("tenant_no"));
+				MemService memSvc = new MemService();
+				MemVO memVO = memSvc.getOneMem(tenant_no);
+				Float tenant_bal = memVO.getBalance();
+				JSONObject jsonobj=new JSONObject();
+				try {
+					jsonobj.put("tenant_bal", tenant_bal);
+					out.println(jsonobj);
+					return;
+				}catch(JSONException e) {
+					e.printStackTrace();
+				}finally {
+					out.flush();
+					out.close();
+				}
+				
+
+			}
+			catch(Exception e) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/mem/memberSys.jsp");
+				failureView.forward(req, res);
+			}finally {
+				out.flush();
+				out.close();
 			}
 		}
 	}

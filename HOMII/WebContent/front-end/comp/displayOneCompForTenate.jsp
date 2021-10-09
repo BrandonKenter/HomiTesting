@@ -5,6 +5,7 @@
 <%@ page import="com.mem.model.*"%>
 <%@ page import="com.apt.model.*"%>
 <%@ page import="com.comp.model.*"%>
+<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 <%
 	MemVO memVO = (MemVO) session.getAttribute("memVO");
 	if(memVO == null){
@@ -34,6 +35,7 @@
 body{
   background-image: url("<%=request.getContextPath()%>/img/lampcut.jpg");
   background-size:100%;
+    background-attachment:fixed;
 }
 .content-header{
   font-family: 'Roboto', sans-serif;
@@ -163,7 +165,7 @@ nav{
                     <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
-	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                          <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
 	                         </c:when>
 	                         <c:otherwise>
 	                         </c:otherwise>
@@ -246,7 +248,7 @@ nav{
 			   <section id="contact">
 				<div class="form-group">
 			    	<label for="username">Tenant Name</label>
-			    	<span><input type="text" class="form-control" value="<%=compVO.getMember_no()%>" id="username"  disabled="disabled"></span>
+			    	<span><input type="text" class="form-control" value="<%=memSvc.getOneMem(compVO.getMember_no()).getMb_name()%>" id="username"  disabled="disabled"></span>
 			  	</div>
 				<div class="form-group">
 			    	<label for="username">Apartment Name</label>

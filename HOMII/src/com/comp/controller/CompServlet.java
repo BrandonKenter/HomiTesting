@@ -86,13 +86,21 @@ public class CompServlet extends HttpServlet{
 
 				String caseTitle = req.getParameter("caseTitle");
 				if (caseTitle == null || caseTitle.trim().length() == 0) {
-					errorMsgs.add("Please enter address");
+					errorMsgs.add("Please enter caseTitle");
 				} 
 
 				String description = req.getParameter("description");
 				if (description == null || description.trim().length() == 0) {
-					errorMsgs.add("Please enter address");
-				} 
+					errorMsgs.add("Please enter description");
+				}
+				
+				String priority = req.getParameter("priority");
+				String priorityReg = "^[(0-9)]{1}$";
+				if (priority == null || priority.trim().length() == 0) {
+					errorMsgs.add("Please enter priority");
+				} else if (!priority.trim().matches(priorityReg)) {
+					errorMsgs.add("Priority only accept digit and length must be 1");
+				}
 
 				String pubType = req.getParameter("pubType");
 				
@@ -117,6 +125,7 @@ public class CompServlet extends HttpServlet{
 				compVO.setPubtype(pubType);
 				compVO.setComp_pic(photo);
 				compVO.setComp_vid(video);
+				compVO.setPriority(priority);
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("compVO", compVO);
@@ -130,7 +139,7 @@ public class CompServlet extends HttpServlet{
 				 ***************************************/
 				CompService compSvc = new CompService();
 				
-				compVO = compSvc.addComp(mb_no, apName, apAddress, landName, caseTitle, description, pubType, photo, video);
+				compVO = compSvc.addComp(mb_no, apName, apAddress, landName, caseTitle, description, pubType, photo, video, priority);
 
 				String url = "/front-end/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 

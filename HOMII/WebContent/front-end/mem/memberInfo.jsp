@@ -22,6 +22,7 @@ integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwr
 <style>
 body{
   background-image: url("<%=request.getContextPath()%>/img/memInfo.jpg");
+    background-attachment:fixed;
 }
 /* header */
 nav{
@@ -79,7 +80,7 @@ nav{
                     <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
-	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
 	                         </c:when>
 	                         <c:otherwise>
 	                         </c:otherwise>
@@ -115,7 +116,7 @@ nav{
                         <a class="nav-link text-white" aria-current="page" href="#" onclick="loginFirst()">Create case</a>
                      </c:when>
                      <c:otherwise>
-                     	<a class="nav-link text-white" aria-current="page" href="<%=request.getContextPath()%>/front-end/complaint/addComp.jsp">Create case</a>
+                     	<a class="nav-link text-white" aria-current="page" href="<%=request.getContextPath()%>/front-end/comp/addComp.jsp">Create case</a>
                      </c:otherwise>
                 </c:choose> 
                 <a class="nav-link text-white" href="#">|</a>

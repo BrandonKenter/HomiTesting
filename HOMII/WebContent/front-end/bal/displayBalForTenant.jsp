@@ -36,6 +36,7 @@
 	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, "Lucida Grande", "PingFang TC", "Apple LiGothic Medium", sans-serif;
 	  background-image: url("<%=request.getContextPath()%>/img/complaint form.jpg");
   background-size:100%;
+  	background-attachment:fixed;
  	        }  
   table#table-1 {
 	background-color: #CCCCFF;
@@ -301,7 +302,7 @@ nav{
                     <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
-	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Payment System</a></li>
+	                          <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
 	                         </c:when>
 	                         <c:otherwise>
 	                         </c:otherwise>
@@ -397,7 +398,7 @@ nav{
 		  	<input type="text" class="price" name="price" placeholder="Enter the price"><input type="submit" id="submitBtn" class="btn btn-primary submit" value="Make a Payment">
 
 		  	</FORM>
-		  	<p>If you ever register a credit card, please register <a href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">here</a></p>
+		  	<p>If you never register a credit card, please register <a href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">here</a></p>
 		</section>
 	</div>
 <div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Payment Log</h1></div>
@@ -447,21 +448,44 @@ nav{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
+
+$(".price").change(function(){
+	var p = $(".price").val();
+	var tenBal =parseInt("${memVO.balance}");
+	if (isNaN(parseInt(p))){
+		Swal.fire('Please enter digit only');
+	}
+	if (p > tenBal){
+		Swal.fire('You pay too much money!!!');		
+	}
+})
+$("#submitBtn").on("click", function () {
+	var price = $(".price").val();
+	if (price.length == 0){
+		Swal.fire('Please enter a price').then((result)=>{
+			window.location.href = "<%=request.getContextPath()%>/front-end/bal/displayBalForTenant.jsp";
+		});
+	}
+})	
+
 $("#submitBtn").on("click", function () {
 	var sw = false;
 <c:forEach var="payVO" items="${paySvc.getAllCard(memVO.member_no)}">
-
 	var cardNo = $("#inputcard_${payVO.pay_no}");
-	
-
-	if (cardNo. == undefined){
-		Swal.fire('Please Login');
+	if (cardNo.is(':checked')){
+		sw = true;;
 	}
-
-
 </c:forEach>
-if
+	console.log(sw);
+	if (!sw) {
+		Swal.fire('Please choose a credit card').then((result)=>{
+			window.location.href = "<%=request.getContextPath()%>/front-end/bal/displayBalForTenant.jsp";
+		});
+	}
 })
+
+
+
 $(function(){
     var len = 50;
     $(".JQellipsis").each(function(i){

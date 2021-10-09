@@ -16,6 +16,7 @@ public class CompVO implements java.io.Serializable{
 	private Date crt_dt;
 	private String status;
 	private String response;
+	private String priority;
 	
 	public Integer getComplaint_no() {
 		return complaint_no;
@@ -94,6 +95,12 @@ public class CompVO implements java.io.Serializable{
 	}
 	public void setResponse(String response) {
 		this.response = response;
+	}
+	public String getPriority() {
+		return priority;
+	}
+	public void setPriority(String priority) {
+		this.priority = priority;
 	}
 
 }

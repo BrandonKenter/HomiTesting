@@ -254,7 +254,7 @@ a{color:inherit;text-decoration:none}
 			<div class="sign-up-htm">
 				<div class="group form-group">
 					<label for="name" class="label">Member Name</label>
-					<input id="name" type="text"  name="mb_name" class="input" value="<%= (memVO==null)? "" : memVO.getMb_name()%>" data-error="Please enter English or Digital number" pattern="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$" required="required" autocomplete="off">
+					<input id="name" type="text"  name="mb_name" class="input" value="<%= (memVO==null)? "" : memVO.getMb_name()%>" data-error="Please enter English or Digital number" pattern="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,10}$" required="required" autocomplete="off">
 				<div class="help-block with-errors"></div>
 				</div>
 				<div class="group form-group">
@@ -269,12 +269,12 @@ a{color:inherit;text-decoration:none}
 				</div>
 				<div class="group form-group">
 					<label for="phone" class="label">Phone</label>
-					<input id="phone" type="text" name="mb_phone" class="input" value="<%= (memVO==null)? "" : memVO.getMb_phone()%>" data-error="Length is 15 at most" pattern="^[(0-9)]{2,15}$" required="required" autocomplete="off">
+					<input id="phone" type="text" name="mb_phone" class="input" value="<%= (memVO==null)? "" : memVO.getMb_phone()%>" data-error="Please use digit only and length is 15 at most" pattern="^[(0-9)]{1,15}$" required="required" autocomplete="off">
 				<div class="help-block with-errors"></div>
 				</div>
 				<div class="group form-group">
 					<label for="address" class="label">Address</label>
-					<input id="address" type="text" name="mb_address" class="input" value="<%= (memVO==null)? "" : memVO.getMb_address()%>" data-error="Please enter English or Digital number" pattern="^[(a-zA-Z0-9_)(\s)]{1,1000}$" required="required" autocomplete="off">
+					<input id="address" type="text" name="mb_address" class="input" value="<%= (memVO==null)? "" : memVO.getMb_address()%>" data-error="Please enter English or Digital number" pattern="^[(a-zA-Z0-9_)(\s\S)]{1,1000}$" required="required" autocomplete="off">
 				<div class="help-block with-errors"></div>
 				</div>
 				<div class="group form-group">

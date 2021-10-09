@@ -28,4 +28,7 @@ public class BalService {
 	public List<BalVO> getAllBalByMemNo(Integer member_no){
 		return dao.getAllByMemNo(member_no);
 	}
+	public List<BalVO> getAllBalByLandNo(Integer member_no){
+		return dao.getAllByLandNo(member_no);
+	}
 }

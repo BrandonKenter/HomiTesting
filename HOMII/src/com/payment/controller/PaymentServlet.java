@@ -2,6 +2,8 @@ package com.payment.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,6 +45,7 @@ public class PaymentServlet extends HttpServlet {
 		String action = req.getParameter("action").trim();
 
 		if ("insert_credit_card".equals(action)) { 
+
 			try {
 				int mb_no = new Integer(req.getParameter("mb_no"));
 				String card_no = req.getParameter("card_no").trim();
@@ -108,12 +111,36 @@ public class PaymentServlet extends HttpServlet {
 		}
 		
 		if ("payFromTenant".equals(action)) { 
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			List<String> successMsgs = new LinkedList<String>();
+			req.setAttribute("successMsgs", successMsgs);
 			try {
 				int mb_no = new Integer(req.getParameter("member_no"));
-
+				
+				if (req.getParameter("price") == null || req.getParameter("price").length()==0 ) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/bal/displayBalForTenant.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				Float price = new Float(req.getParameter("price").trim());
+				if  (price <= 0) {
+					errorMsgs.add("error");
+				}
+				
+				if (req.getParameter("pay_no") == null || req.getParameter("pay_no").length()==0) {
+					System.out.println("11");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/bal/displayBalForTenant.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				String type = req.getParameter("type").trim();
-				if (price < 0) {
+				if (type == null || type.trim().length() == 0) {
+					errorMsgs.add("error");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/bal/displayBalForTenant.jsp");
+					failureView.forward(req, res);
 					return;
 				}
 				MemService memSvc = new MemService();
@@ -133,7 +160,71 @@ public class PaymentServlet extends HttpServlet {
 				e.printStackTrace(System.err);
 			}
 		}
+		if ("addPrice".equals(action)) { 
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			List<String> successMsgs = new LinkedList<String>();
+			req.setAttribute("successMsgs", successMsgs);
+			try {
+				int land_no = new Integer(req.getParameter("member_no"));
+				
+				String str = req.getParameter("price");
+
+				if (str == null || str.length()==0 || !PaymentServlet.isNum(str)) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/IIPay/Pay.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				Float price = new Float(req.getParameter("price").trim());
+				if  (price <= 0) {
+					errorMsgs.add("error");
+				}
+				
+				if (req.getParameter("llRadio") == null || req.getParameter("llRadio").length()==0) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/IIPay/Pay.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				String llRadio = req.getParameter("llRadio").trim();
+				if (llRadio == null || llRadio.trim().length() == 0) {
+					errorMsgs.add("error");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/IIPay/Pay.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				Integer tenant_no = new Integer(req.getParameter("tenant_name").trim());
+				MemService memSvc = new MemService();
+				float curBal = memSvc.getOneMem(tenant_no).getBalance();
+				
+				if("0".equals(llRadio)) {
+					memSvc.updateBalance(tenant_no, curBal + price);					
+				}
+				if("1".equals(llRadio)) {
+					memSvc.updateBalance(tenant_no, curBal - price);					
+				}
+
+				
+				BalService balSvc = new BalService();
+				balSvc.addBal(tenant_no, land_no, llRadio, price);
+
+				String url = "/front-end/IIPay/Pay.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // after adding, forward to
+				// listAllEmp.jsp
+				successView.forward(req, res);
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		}
 	
 	}
+	public static boolean isNum (String str){
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isDigit(str.charAt(i)))
+                return false;
+        }
+        return true;
+    }
 
 }

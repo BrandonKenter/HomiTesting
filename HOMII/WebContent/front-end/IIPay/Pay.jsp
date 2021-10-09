@@ -1,66 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="java.util.*"%>
-<%@ page import="com.comp.model.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.mem.model.*"%>
 <%@ page import="com.reg.model.*"%>
-
-
-<jsp:useBean id="compSvc" scope="page" class="com.comp.model.CompService" />
+<jsp:useBean id="regSvc" scope="page" class="com.reg.model.RegService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
-<jsp:useBean id="compDAO" scope="page" class="com.comp.model.CompDAO" />	
-<jsp:useBean id="memVO" scope="session" class="com.mem.model.MemVO" />
+<jsp:useBean id="balSvc" scope="page" class="com.bal.model.BalService" />
 <%
-	memVO = memSvc.getOneMem(memVO.getMember_no());
+	MemVO memVO = (MemVO) session.getAttribute("memVO");
+	if(memVO == null){
+		memVO = new MemVO();
+		memVO.setMember_no(99);
+	}
 	pageContext.setAttribute("memVO", memVO);
-	RegService regSvc = new RegService();
-	RegVO regVO = regSvc.getOneRegister(memVO.getMember_no());
-	pageContext.setAttribute("regVO", regVO);
 
 %>
+<!DOCTYPE html>
 <html>
 <head>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
-<title>AllCaseForTenant</title>
-
-<style>
-   body {  
-/*      width: 1200px;   */
-
-
-	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, "Lucida Grande", "PingFang TC", "Apple LiGothic Medium", sans-serif;
-	  background-image: url("<%=request.getContextPath()%>/img/complaint form.jpg");
-  background-size:100%;
-    background-attachment:fixed;
- 	        }  
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
-<style>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Badger Bank">
+    <meta name="author" content="Matthew Maurice">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+body{
+	background-image:url("<%=request.getContextPath()%>/img/complaint form.jpg");
+	background-size:100%;
+	  background-attachment:fixed;
+}
 .row{
 	margin-left:20px !important;
 	margin-right:20px !important;
 }
   table {
 	width: 100%;
-	background-color: white;
+	background-color: white !important;
 	margin-top: 0px;
 	margin-bottom: 5px;
 	
@@ -217,13 +202,6 @@ textarea.form-control {
 .balance h1, div, a{
 	text-align:center;
 }
-.submit{
-  font-size: 1.1em;
-  width: 200px;
-  background-color: transparent;
-  color: #fff;
-
-}
 /* header */
 nav{
 	background-color: #4a3b3b;
@@ -237,14 +215,14 @@ nav{
 	margin-right:15px;
 	border-radius:50%;
 }
-
 </style>
-
+    
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark">
+
+	<nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HöMI</h2></a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HÃ¶MI</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -330,7 +308,7 @@ nav{
 						</c:when>
 						<c:otherwise>
 								<img src="${pageContext.request.contextPath}/mem/DBGifReader4.do?member_no=${memVO.member_no}" 
-									id="${memVO.member_no}" alt=" width="60px;" height="60px" 
+									id="${memVO.member_no}" alt=" width="50px;" height="50px" 
 									class="clickable" />
 								<a class="text-white" id="welcome"> ${memVO.mb_name} &nbsp</a>
 								<a id="logout-btn" href="<%=request.getContextPath()%>/front-end/mem/MemLogout.jsp"> Logout </a>
@@ -344,134 +322,177 @@ nav{
         </div>
     </nav>
 
-<div class="container-fluid forum-body" style="min-height:450px;">
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">Fix error as below:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+	<br>
+            <br>
+            <h2 style="text-align:center">Welcome to your payment portal!</h2>  
+            
+            <br>
+            
+            <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/pay/pay.do" class="payform" name="form2" enctype="multipart/form-data" data-toggle="validator">
+            <p style="text-align:center">Please Select Tenant</p>
+            <div class="dropdown" style="text-align:center">
+				<select name="tenant_name" id="showTenateBal">
+					<c:forEach var="regVO" items="${regSvc.getAllRegisterByLandNameWithApproval(memVO.mb_name)}">
+						<option value="${regVO.member_no}" >${memSvc.getOneMem(regVO.member_no).mb_name}
+					</c:forEach>
+				</select>
+            </div>
+            <br>
+
+
+            <!--Pick Action-->
+            <div style="text-align:center" onchange="landlordTypeSelect()">
+              <div class="form-check form-check-inline" >
+                <input class="form-check-input" type="radio" name="llRadio" value="0" id="llPenaltyRadio" formaction="javascript:landlordPenaltySelect();">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Penalty
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="llRadio" value="1" id="llPaymentRadio" checked formaction="javascript:landlordPaymentSelect();">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Payment
+                </label>
+              </div>
+            </div>
+
+            <!--
+          <p>Enter Credit Card Info:</p>
+          <input style="margin-bottom: 10px" id="CreditCardInfo" type="text"></input>
+            -->
+
+          <!-- Payment -->
+          <div id = "llPaymentForm" style="text-align:center">
+            <p>Enter Amount:</p>
+            <input style="margin-bottom: 10px" name="price" id="amountPaid" type="text"></input>
+          	<input type="hidden" name="member_no" value="${memVO.member_no}">
+          	<input type="hidden" name="action" value="addPrice">
+			<input type="submit" id="submitBtn" style="margin-bottom: 10px" class="btn btn-primary submit" value="Add to Balance">
+          </div>
+
+	</FORM>
+	<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Payment Log</h1></div>
 <div class="row">
-	<div class="col-md-6">
-		<div class="balance" >
-			<h1>Your current balance is :</h1>
-			<br>
-			<div style="font-size:50px;">${memVO.balance}</div>
-			<br><br><br>
-			<a href="<%=request.getContextPath()%>/front-end/bal/displayBalForTenant.jsp"><input type="button" class="btn btn-primary submit" value="Make a payment"></a>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<section id="contact">
-			<h1>My Rent</h1>
-			<div class="form-group">
-		    	<label for="apName">Apartment Name</label>
-		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getAp_name()%>" id="apName"  disabled="disabled"></span>
-		  	</div>
-			<div class="form-group">
-		    	<label for="apAddress">Apartment Address</label>
-		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getAp_address()%>" id="apAddress"  disabled="disabled"></span>
-		  	</div>
-			<div class="form-group">
-		    	<label for="landName">LandLord Name</label>
-		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getLand_name()%>" id="landName"  disabled="disabled"></span>
-		  	</div>
-			<div class="form-group">
-		    	<label for="status">Status</label>
-		    	 <c:choose>
-                   <c:when test="${regVO.status == 0}">
-		    			 <span>Pending</span>
-                   </c:when>
-                   <c:when test="${regVO.status == 1}">
-                         <span>Approved</span>
-                   </c:when>
-                   <c:when test="${regVO.status == 2}">
-                         <span>Rejected</span>
-                   </c:when>
-                   <c:otherwise>
-                   		 <span>Pending</span>
-                   </c:otherwise>
-	            </c:choose>  
-		  	</div>
-		  	<a href="<%=request.getContextPath()%>/front-end/reg/addReg.jsp"><input type="button" class="btn btn-primary submit" value="Register new rent"></a>
-		</section>
-	</div>
-<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">All the cases</h1></div>
 <table id="forum" class="table table-hover">
 	 <thead style="background-color:#126E7D">
 		<tr>		
-			<th>Apartment Name</th>
-			<th>Case Title</th>
-			<th>Status</th>
-			<th>Priority</th>			
 			<th>Date</th>
+			<th>Tenant Name</th>
+			<th>Transaction Type</th>
+			<th>Price</th>
 		</tr>
 	</thead>
-	<c:forEach var="compVO" items="${compSvc.getAllCompByMemNo(memVO.member_no)}">		
+
+	<c:forEach var="balVO" items="${balSvc.getAllBalByLandNo(memVO.member_no)}">	
 		<tbody>
 			<tr>
-				<td>${compVO.ap_name}</td>
+				<td>${balVO.crt_dt}</td>
+				
+				<td>${memSvc.getOneMem(balVO.member_no).mb_name}</td>		
 
-				<td style=" font-size:large;">
-					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/comp/displayOneCompForTenate.jsp?complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
-				</td>		
 			    <c:choose>
-                   <c:when test="${compVO.status==0}">
-                         <td>Pending</td>
+                   <c:when test="${balVO.type == 0}">
+                         <td>A LATE FEE</td>
                    </c:when>
-                   <c:when test="${compVO.status==1}">
-                         <td>Processing</td>
+                   <c:when test="${balVO.type == 1}">
+                         <td>CHECK A PAYMENT</td>
                    </c:when>
-                   <c:when test="${compVO.status==2}">
-                         <td>Solved</td>
+                   <c:when test="${balVO.type == 2}">
+                         <td>PAYMENT FROM TENANT</td>
                    </c:when>
                    <c:otherwise>
-                   		 <td>Invalid Status</td>
+                   		 <td>Invalid Type</td>
                    </c:otherwise>
 	            </c:choose>  
-	            <td>${compVO.priority}</td>
-				<td><fmt:formatDate value="${compVO.crt_dt}" pattern="yyyy-MM-dd HH:mm"/></td>
-
+				<td>${balVO.price}</td>
 			</tr>
 		</tbody>			
 	</c:forEach>
 </table>
+
 </div>
-</div>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script>
-$(function(){
-    var len = 50;
-    $(".JQellipsis").each(function(i){
-        if($(this).text().length>len){
-            $(this).attr("title",$(this).text());
-            var text=$(this).text().substring(0,len-1)+"<a href=" + $(this).attr('href') + ">......see more...<a>";
-            
-            $(this).html(text);
-        }
-    });
-});
+	<script>
+	
+	$("#amountPaid").change(function(){
+		var p = $("#amountPaid").val();
+		console.log(p);
+		if (isNaN(parseInt(p))){
+			Swal.fire('Please enter digit only');
+		}
+	})
+	
+		function landlordAddPayment() {
+	
+		    var curBal = document.getElementById("balance").innerHTML;
+	
+		    var paymentAmnt = document.getElementById("amountPaid").value;
+	
+		    // Displays errors if input is not a number, or is empty
+			if (isNaN(paymentAmnt) || paymentAmnt.length == 0){
+				console.log("Invalid Value");	
+			}
+			// Displays the new balance
+			else {
+				document.getElementById("balance").innerHTML = curBal - paymentAmnt;
+			}   
+		}
+		
+		function landlordAddPenalty() {
 
-$("#forum>tbody>tr>td").mouseover(function(){
+		    var curBal = document.getElementById("balance").innerHTML;
 
-		$(this).find(".notJQellipsis").css("color", "#126E7D");
-});
+		    var penaltyAmnt = document.getElementById("penaltyAmount").value;
 
-$("#forum>tbody>tr>td").mouseleave(function(){
-	$(this).find(".notJQellipsis").css("color", "black");
-});
+		    // Displays errors if input is not a number, or is empty
+			if (isNaN(penaltyAmnt) || penaltyAmnt.length == 0){
+				console.log("Invalid Value");	
+			}
+			// Displays the new balance
+			else {
+				newBal = parseFloat(curBal)+parseFloat(penaltyAmnt);
+		        console.log(newBal);
 
-function loginFirst(){
-	Swal.fire('Please Login').then((result)=>{
-		window.location.href = "<%=request.getContextPath()%>/front-end/mem/MemLogin.jsp";
-	});
-}
-
-
-</script>
+		        document.getElementById("balance").innerHTML = newBal;
+			}
+		}
+	
+		function landlordTypeSelect() {
+		    //console.log("PaymentOutter");
+		    if ($("#llPaymentRadio").is(":checked")) {
+		        //console.log("Payment");
+		        document.getElementById("llPaymentForm").style.visibility = "visible";
+		        document.getElementById("llPenaltyForm").style.visibility = "hidden";
+		    }
+		    if ($("#llPenaltyRadio").is(":checked")) {
+		        //console.log("Payment");
+		        document.getElementById("llPenaltyForm").style.visibility = "visible";
+		        document.getElementById("llPaymentForm").style.visibility = "hidden";
+		    }
+		    // document.getElementById("llPaymentForm").style.visibility = "visible";
+		    // document.getElementById("llPenaltyForm").style.visibility = "hidden";
+		}
+		
+		$("#showTenateBal").change(function(){
+        	let tenant_no = "${regVO.member_no}"; 
+        	let balance = $("#balance");
+	    	$.ajax({
+	    		url: "<%=request.getContextPath()%>/bal/bal.do?action=showTenBal",
+                data: { 
+          		  "tenant_no" : tenant_no 
+            	},
+	    		type: "POST",
+	    		success: function(json){
+						let jsonobj = JSON.parse(json);
+						let tenant_no = jsonobj.tenant_bal;
+						console.log(tenant_no);
+						balance.text()=tenant_no;
+	    		}
+	    	});
+		});
+	
+	
+	</script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+</body>
 </html>
