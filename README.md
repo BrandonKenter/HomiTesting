@@ -70,7 +70,7 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 
 -> click refresh button on the up-right side of left box
 
-(Download MySQL script: http://tiny.cc/ng1kuz)
+(Download MySQL script: http://tiny.cc/3n2kuz)
 
 ![image](https://user-images.githubusercontent.com/91846668/136495072-74191733-237f-46ae-8a96-1138f1d8d4ea.png)
 
@@ -207,7 +207,7 @@ Once the tenant sent an application, rental owner can get the application in his
  
 - [x] **2.a Set payment system**
 
-Go to XXX to add the credit card information 
+Click "Member center" -> add the credit card information
 
 (it would show error message if the data format is not as expected)
 
