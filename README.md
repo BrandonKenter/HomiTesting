@@ -18,7 +18,7 @@ Our full stack is as below, so we have to install & setup the related applicatio
 
 1.1	install MySQL 8.0.19 (Download MySQL: http://tiny.cc/hg1kuz)
 
-        * Set password as 123456, it would be convenitent for link with tomcat later.
+*Set password as 123456, it would be convenitent for link with tomcat later.
 
 1.2	Download my.ini file and move it to MySQL 8.0.19 directory (Download my.ini: http://tiny.cc/jg1kuz)
 
