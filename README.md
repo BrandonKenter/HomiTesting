@@ -16,7 +16,8 @@ Our full stack is as below, so we have to install & setup the related applicatio
 
 1.MySQL setup
 
-1.1	install MySQL 8.0.19 (Download MySQL: http://tiny.cc/hg1kuz)
+1.1	install MySQL 8.0.19 (Download MySQL: http://tiny.cc/hg1kuz) 
+        * Set password as 123456, it would be convenitent for link with tomcat later.
 
 1.2	Download my.ini file and move it to MySQL 8.0.19 directory (Download my.ini: http://tiny.cc/jg1kuz)
 
@@ -61,6 +62,7 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 ![image](https://user-images.githubusercontent.com/91846668/136494886-4c57270f-f2f7-4175-be9d-68bf1835e295.png)
 
 1.12	Click “Store in Keychain” -> input the password you set before -> Test connection (it would show successful message if it works)
+***If your password is not set 123456, please see 2.13 instruction.**
 
 ![image](https://user-images.githubusercontent.com/91846668/136494913-6188ccf9-c057-4a11-a129-b1f2629d05bc.png)
 
@@ -82,7 +84,10 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 
 2.3 Create an independent directory for this project -> copy the project folder & tomcat folder to the directory
 
-(project folder: from Github / tomcat folder:download Tomcat v9 from http://tiny.cc/xg1kuz)
+(project folder: from Github / tomcat folder:download Tomcat v9 from http://tiny.cc/wn2kuz)
+
+***If your MySQL root password is not 123456, please go to conf file -> open context.xml -> find password="123456" modify to your password 
+ after download tomcat.**
 
 2.4 Open Eclipse and choose the directory as workplace
 
@@ -120,6 +125,10 @@ There may still have error after doing the procedure above, if it is, please che
 ![image](https://user-images.githubusercontent.com/91846668/136495775-895774a0-fdd0-4065-9073-a9ac1166b2b2.png)
  
 *Check if some error in libraries -> if yes, re-add the JARs which show error (we put the JARS in the project folder)
+
+(Download javax.mail.jar: http://tiny.cc/zn2kuz)
+
+(Download jstl.jar: http://tiny.cc/2o2kuz)
 
 *Check if the JRE Library is JavaSE 1.8 -> if not, edit it to correct version
  
