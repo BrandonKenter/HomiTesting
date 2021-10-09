@@ -62,11 +62,14 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 ![image](https://user-images.githubusercontent.com/91846668/136494886-4c57270f-f2f7-4175-be9d-68bf1835e295.png)
 
 1.12	Click “Store in Keychain” -> input the password you set before -> Test connection (it would show successful message if it works)
+
 ***If your password is not set 123456, please see 2.13 instruction.**
 
 ![image](https://user-images.githubusercontent.com/91846668/136494913-6188ccf9-c057-4a11-a129-b1f2629d05bc.png)
 
-1.13	(Import tables) After connection -> go to scheme tab -> click add SQL button on the up-left side 
+1.13	(Import tables) After connection -> go to scheme tab -> right-click on the left box -> create schema
+
+-> name the schema **HOMII** -> click add SQL button on the up-left side 
 
 -> copy the words from the link below -> paste to the sheet -> click execute button (flash sign) 
 
@@ -124,7 +127,7 @@ There may still have error after doing the procedure above, if it is, please che
 
 ![image](https://user-images.githubusercontent.com/91846668/136495775-895774a0-fdd0-4065-9073-a9ac1166b2b2.png)
  
-*Check if some error in libraries -> if yes, re-add the JARs which show error (we put the JARS in the project folder)
+*Check if some error in libraries -> if yes, re-add the JARs which show error
 
 (Download javax.mail.jar: http://tiny.cc/zn2kuz)
 
@@ -255,7 +258,9 @@ Click “Payment System” -> select the tenant who makes the payment -> select 
 - [x] **3.a Open a maintenance request**
 
 Click the create case on the up-right corner 
--> fill up the information needed (description, photo, video, etc) 
+
+-> fill up the information needed (description, photo, video, etc)
+
 -> the priority box can define the urgency
 
 ![image](https://user-images.githubusercontent.com/91846668/136629015-10b50d36-13e2-4a88-b221-14dc4540133a.png)
