@@ -16,7 +16,7 @@ Our full stack is as below, so we have to install & setup the related applicatio
 
 1.MySQL setup
 
-1.1	install MySQL 8.0.19 (Download MySQL: http://tiny.cc/1f4kuz)
+1.1	install MySQL 8.0.19 (Download MySQL: http://tiny.cc/6f4kuz)
 
 *Set password as 123456, it would be convenitent for link with tomcat later.
 
@@ -84,7 +84,7 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 	
 2.1 install Eclipse EE (Download Eclipse: http://tiny.cc/ug1kuz)
 
-2.2 install java JDK 1.8.0_201 (Download JDK: http://tiny.cc/ve4kuz)
+2.2 install java JDK 1.8.0_201 (Download JDK: http://tiny.cc/ye4kuz)
 
 2.3 Create an independent directory for this project -> copy the project folder & tomcat folder to the directory
 
