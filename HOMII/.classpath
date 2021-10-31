@@ -13,7 +13,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="//Mac/Home/Desktop/javax.mail.jar"/>
-	<classpathentry kind="lib" path="//Mac/Home/Desktop/jstl.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -22,6 +22,7 @@ public interface MemDAO_interface {
 	  public MemVO getPassword(String mb_email);
 	  public void updateRandomPws(String mb_email, String mb_pwd);
 	  public void updateBalance(MemVO membervo);
+	  public MemVO findByPrimaryKeyByMbName(String mb_name);
 	/* public Set<RelationshipVO> getRelationshipsByMemberno(Integer member_no); */		  
 	/* public List<MemVO> getAll(Map<String, String[]> map); */
 }

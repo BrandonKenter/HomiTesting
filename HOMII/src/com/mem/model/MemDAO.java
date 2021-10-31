@@ -35,6 +35,7 @@ public class MemDAO implements MemDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO member (mb_name, mb_email, mb_pwd, mb_pic, mb_phone, mb_address, membership) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM member order by member_no";
 	private static final String GET_ONE_STMT = "SELECT * FROM member where member_no = ?";
+	private static final String GET_ONE_STMT_BY_MB_NAME = "SELECT * FROM member where mb_name = ?";
 	private static final String DELETE = "DELETE FROM member where member_no = ?";
 	private static final String FRONT_UPDATE = "UPDATE member set mb_name=?, mb_phone=?, mb_address=? where member_no = ?";
 	private static final String BACK_UPDATE = "UPDATE member set mb_name=?, mb_email=?, mb_pwd=?, mb_pic=?, mb_phone=?, mb_address=?, crt_dt=?, status=? where member_no = ?";
@@ -249,6 +250,68 @@ public class MemDAO implements MemDAO_interface {
 
 			}
 
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memVO;
+	}
+	@Override
+	public MemVO findByPrimaryKeyByMbName(String mb_name) {
+		MemVO memVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT_BY_MB_NAME);
+			
+			pstmt.setString(1, mb_name);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				memVO = new MemVO();
+				memVO.setMember_no(rs.getInt("member_no"));
+				memVO.setMb_name(rs.getString("mb_name"));
+				memVO.setMb_email(rs.getString("mb_email"));
+				memVO.setMb_pwd(rs.getString("mb_pwd"));
+				memVO.setMb_pic(rs.getBytes("mb_pic"));
+				memVO.setMb_phone(rs.getString("mb_phone"));
+				memVO.setMb_address(rs.getString("mb_address"));
+				memVO.setCrt_dt(rs.getDate("crt_dt"));
+				memVO.setStatus(rs.getString("status"));
+				memVO.setMembership(rs.getString("membership"));
+				memVO.setBalance(rs.getFloat("balance"));
+				
+			}
+			
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

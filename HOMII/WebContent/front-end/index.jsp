@@ -280,6 +280,20 @@ p {
 	                    </c:choose> 
                     </li>
                     <li class="nav-item">
+                    	<c:choose>
+	                         <c:when test="${memVO==null || memVO.member_no==99 }">
+	                               <li><a class="nav-link" aria-current="page" href="#" onclick="loginFirst()">My community</a></li>
+	                         </c:when>
+	                         <c:otherwise>
+	                         	<c:choose>
+	                         		<c:when test="${memVO.membership == 0}">
+	  	                       			<li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/comu/listComu.jsp">My community</a></li>
+	                         		</c:when>
+	                         	</c:choose>
+	                         </c:otherwise>
+	                    </c:choose> 
+                    </li>
+                    <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
 	                          <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>

@@ -6,19 +6,22 @@
 <%@ page import="com.comp.model.*"%>
 <%@ page import="com.mem.model.*"%>
 <%@ page import="com.reg.model.*"%>
-
+<%@ page import="com.apt.model.*"%>
 
 <jsp:useBean id="compSvc" scope="page" class="com.comp.model.CompService" />
+<jsp:useBean id="regSvc" scope="page" class="com.reg.model.RegService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 <jsp:useBean id="compDAO" scope="page" class="com.comp.model.CompDAO" />	
 <jsp:useBean id="memVO" scope="session" class="com.mem.model.MemVO" />
 <%
 	memVO = memSvc.getOneMem(memVO.getMember_no());
 	pageContext.setAttribute("memVO", memVO);
-	RegService regSvc = new RegService();
+
 	RegVO regVO = regSvc.getOneRegister(memVO.getMember_no());
 	pageContext.setAttribute("regVO", regVO);
-
+	AptService aptSvc = new AptService();
+	AptVO aptVO = aptSvc.getOneAptByApName(regVO.getAp_name());
+	pageContext.setAttribute("aptVO", aptVO);
 
 %>
 <html>
@@ -26,6 +29,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/front/chatbox.css" type="text/css" />
 <title>AllCaseForTenant</title>
 
 <style>
@@ -210,7 +214,7 @@ textarea.form-control {
     width: 50%
 }
 .balance{
-	margin:38px 50px;
+	margin:38px 0px;
 	border-radius:50px;
 	backdrop-filter: blur(5px);
 	background-color:#80808021;
@@ -224,6 +228,13 @@ textarea.form-control {
   background-color: transparent;
   color: #fff;
 
+}
+
+.w-100{
+	height: 250px;
+	width: 80% !important;
+	margin: 20px 44px;
+	overflow:hidden;
 }
 /* header */
 nav{
@@ -242,7 +253,7 @@ nav{
 </style>
 
 </head>
-<body>
+<body onload="connect();" onunload="disconnect();">
 <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HöMI</h2></a>
@@ -354,26 +365,56 @@ nav{
 		</c:forEach>
 	</ul>
 </c:if>
+<c:if test="${memVO != null}">
+<!-- chatbox -->
+<div id="chat-circle" class="btn btn-raised">
+        <div id="chat-overlay"></div>
+        <i class="fas fa-sms"></i>
+</div>
+<div class="chat-box">
+    <div class="chat-box-header">
+      <i class="far fa-comment" style="margin-right:5px"></i><span id="contactName"></span>
+      <span class="chat-box-toggle"><i class="fas fa-minus"></i></span>
+    </div>
+    <div class="chat-box-body">
+      <div class="chat-box-overlay">   
+      </div>
+      <div class="chat-logs">
+       
+      </div><!--chat-log -->
+    </div>
+    <div class="chat-input">      
+      <input type="text" id="chat-input" placeholder="Send a message..." onkeydown="if (event.keyCode == 13) sendMessage();"/>
+      <button class="chat-submit" id="chat-submit"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+<!-- chatbox -->
+</c:if>
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="balance" >
-			<h1>Your current balance is :</h1>
-			<br>
-			<div style="font-size:50px;">${memVO.balance}</div>
-			<br><br><br>
-			<a href="<%=request.getContextPath()%>/front-end/bal/displayBalForTenant.jsp"><input type="button" class="btn btn-primary submit" value="Make a payment"></a>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<section id="contact">
-			<h1>My Rent</h1>
+			<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="${pageContext.request.contextPath}/apt/apt.do?action=view_aptPic1&ap_name=${aptVO.ap_name}" class="d-block w-100" alt="...">
+			    </div>
+			    <div class="carousel-item">
+				  <img src="${pageContext.request.contextPath}/apt/apt.do?action=view_aptPic2&ap_name=${aptVO.ap_name}" class="d-block w-100" alt="...">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="${pageContext.request.contextPath}/apt/apt.do?action=view_aptPic3&ap_name=${aptVO.ap_name}" class="d-block w-100" alt="...">
+			    </div>
+			  </div>
+			</div>
+
+			<div style="padding:35px 0px">
 			<div class="form-group">
 		    	<label for="apName">Apartment Name</label>
 		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getAp_name()%>" id="apName"  disabled="disabled"></span>
 		  	</div>
 			<div class="form-group">
 		    	<label for="apAddress">Apartment Address</label>
-		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getAp_address()%>" id="apAddress"  disabled="disabled"></span>
+		    	<span><textarea class="form-control" cols="2" rows="2" id="apAddress"  disabled="disabled">${regVO.ap_address}</textarea></span>
 		  	</div>
 			<div class="form-group">
 		    	<label for="landName">LandLord Name</label>
@@ -396,14 +437,21 @@ nav{
                    </c:otherwise>
 	            </c:choose>  
 		  	</div>
-		  	<a href="<%=request.getContextPath()%>/front-end/reg/addReg.jsp"><input type="button" class="btn btn-primary submit" value="Register new rent"></a>
-		</section>
+		  	</div>
+		</div>
 	</div>
-<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">All the cases</h1></div>
+	<div class="col-md-8">
+		<div style="text-align:center; margin:40px 0px auto;"><h3 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Your Neighbors</h3></div>
+		<section id="contact">
+			<div id="statusOutput" class="statusOutput" style="display: none;"></div>
+				<div id="row" style="display:flex; justify-content:center;"></div>
+		</section>
+
+<div style="text-align:center;"><h3 class="shadow p-3 mb-1 rounded" style="display:inline-block;">Cases in your community</h3></div>
 <table id="forum" class="table table-hover">
 	 <thead style="background-color:#126E7D">
 		<tr>		
-			<th>Apartment Name</th>
+			<th>Tenant</th>
 			<th>Case Title</th>
 			<th>Status</th>
 			<th>Priority</th>			
@@ -413,7 +461,7 @@ nav{
 	<c:forEach var="compVO" items="${compSvc.getAllCompByMemNo(memVO.member_no)}">		
 		<tbody>
 			<tr>
-				<td>${compVO.ap_name}</td>
+				<td>${memSvc.getOneMem(compVO.member_no).mb_name}</td>
 
 				<td style=" font-size:large;">
 					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/comp/displayOneCompForTenate.jsp?complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
@@ -439,6 +487,7 @@ nav{
 		</tbody>			
 	</c:forEach>
 </table>
+	</div>
 </div>
 </div>
 </body>
@@ -475,4 +524,259 @@ function loginFirst(){
 
 
 </script>
+	
+<script>
+	<c:if test="${memVO != null}">
+		  var INDEX = 0; 
+		  var statusOutput = document.getElementById("statusOutput");
+		  var friendNO;
+		  
+		  var memberImg = "<%=request.getContextPath()%>/MemServlet?action=view_memPic&member_no=${memVO.member_no}";
+		  var friendImg = "<%=request.getContextPath()%>/MemServlet?action=view_memPic&member_no=${memVO.member_no}";
+		  <%-- <c:forEach var="regVO1" items="${regSvc.getAllRegisterByApName(regVO.ap_name)}">
+		  $("#mem_${regVO1.member_no}").click(function() {
+			  console.log(event.target);
+			  friendNO = event.target.value;
+			  console.log(friendNO);
+		  });
+
+		  var friendImg_${regVO1.member_no} = "<%=request.getContextPath()%>/MemServlet?action=view_memPic&member_no=${regVO1.member_no}";
+		  if (friendNO === "${regVO1.member_no}"){
+			  friendImg = friendImg_${regVO1.member_no};
+		  }
+		  </c:forEach> --%>
+		  $("#chat-submit").click(sendMessage);
+		  
+		  function sendMsg() {
+		    var msg = $("#chat-input").val(); 
+		    if(msg.trim() == ''){
+		      return false;
+		    }
+		    generate_message(msg, 'member');
+		  }
+		  function generate_message(msg, type) {
+		    INDEX++;
+		    let img;
+
+		    type === "member" ? img = memberImg : img = friendImg
+			    var str="";
+
+			    str += "<div id='cm-msg-"+INDEX+"' class=\"chat-msg "+type+"\">";
+			    str += "          <span class=\"msg-avatar\">";
+			    str += "            <img src=\"" + img + "\">";
+			    str += "          <\/span>";
+			    str += "          <div class=\"cm-msg-text\">";
+			    str += msg;
+			    str += "          <\/div>";
+			    str += "        <\/div>";
+			    $(".chat-logs").append(str);
+			    $("#cm-msg-"+INDEX).hide().fadeIn(300);
+			    $("#chat-input").val(''); 
+			    $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight}, 1000);  
+
+		  }  
+
+		 //WebSocket
+        var MyPoint = "/FriendWS/${memVO.member_no}";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+		var empID;
+		var empName;
+		var webSocket = null;
+		var self = '${memVO.member_no}';
+		var statusOutput = document.getElementById("statusOutput");
+		var contactName = document.getElementById("contactName");
+	
+		function connect() {
+			// create a websocket
+			webSocket = new WebSocket(endPointURL);
+	
+			webSocket.onopen = function(event) {
+				console.log("Connect Success!");
+				document.getElementById('chat-input').disabled = false;
+			}
+	
+			webSocket.onmessage = function(event) {
+				var jsonObj = JSON.parse(event.data);
+				if ("open" === jsonObj.type) {
+					refreshFriendList(jsonObj);
+				} else if ("history" === jsonObj.type) {
+					var messages = JSON.parse(jsonObj.message);
+					if(messages.length == 0){
+						msg = messages;
+					}
+					for (var i = 0; i < messages.length; i++) {
+						var historyData = JSON.parse(messages[i]);
+						var msg = historyData.message;
+						var mem = historyData.sender;
+
+						let type = '';
+						if (mem === self){
+							type='member';
+						}
+						else{
+							type='emp';
+						}
+						generate_message(msg, type)
+					}
+<%-- 					let fno = statusOutput.textContent;
+					  let formData = new FormData();
+					  formData.append("member_no", fno);
+
+		              $.ajax({
+		                  url: "<%=request.getContextPath()%>/MemServlet?action=view_memPic",
+		                  data: formData,
+		                  type: "POST",
+		                  processData: false, 
+		                  contentType: false,
+		                  success: function (data) {
+		                          $(".friendImage").attr('src', 'data:image/png;base64,' + data);
+		                  },
+		              }); --%>
+					
+				} else if ("chat" === jsonObj.type) {
+					let msg = jsonObj.message;
+					let memberID = jsonObj.sender;
+					let type = '';
+					if (memberID === self){
+						type='member';
+					}
+					else{
+						type='emp';
+					}
+					generate_message(msg, type)
+				} 
+			};
+	
+			webSocket.onclose = function(event) {
+				console.log("Disconnected!");
+			};
+		}
+		
+		function sendMessage() {
+			var inputMessage = document.getElementById("chat-input");
+			var memberID = "${memVO.member_no}";
+			var memberName = "${memVO.mb_name}";
+			var friend = statusOutput.textContent;
+			var message = inputMessage.value.trim();
+			if (message === "") {
+				inputMessage.focus();
+				return;
+			} else {
+				var jsonObj = {
+					"type" : "chat",
+					"sender" : memberID,
+					"receiver" : friend,
+					"message" : message,
+				};
+				webSocket.send(JSON.stringify(jsonObj));
+				inputMessage.value = "";
+				inputMessage.focus();
+			}
+		}
+		
+		function disconnect() {
+			if (webSocket != null) webSocket.close();
+		}
+		function refreshFriendList(jsonObj) {
+			var friends = jsonObj.users;
+			var row = document.getElementById("row");
+			row.innerHTML = '';
+			let friendsName_back = [];
+			let friendsId_back = [];
+			<c:forEach var="regVO1" items="${regSvc.getAllRegisterByApName(regVO.ap_name)}">
+				if ("${regVO1.member_no}" == self){
+					row.innerHTML +='<div class="row mem-block" id=mem_${regVO1.member_no} class="column" name="friendName" style="display:none;"> ' 
+					+ '<div style="margin: auto 0;"><img src="<%=request.getContextPath()%>/img/offline2.png" alt="" width="25px" height="25px" ></div>'
+					+ '<div><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/MemServlet?action=view_memPic&member_no=${memVO.member_no}"/></div>'
+					+ '<button id=membtn_${regVO1.member_no} style="background:transparent; border:unset;"value="${regVO1.member_no}">${memSvc.getOneMem(regVO1.member_no).mb_name}</button>' 
+					'</div>';
+					friendsId_back.push("${regVO1.member_no}");
+					friendsName_back.push("${memSvc.getOneMem(regVO1.member_no).mb_name}");
+				}
+				else{
+					row.innerHTML +='<div class="row mem-block" id=mem_${regVO1.member_no} class="column" name="friendName" style="display:inline;"> ' 
+					+ '<div style="margin: auto 0;"><img src="<%=request.getContextPath()%>/img/offline2.png" alt="" width="15px" height="15px" ></div>'
+					+ '<div><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/MemServlet?action=view_memPic&member_no=${memVO.member_no}"/></div>'
+					+ '<button id=membtn_${regVO1.member_no} style="background:transparent; border:unset;"value="${regVO1.member_no}">${memSvc.getOneMem(regVO1.member_no).mb_name}</button>' 
+					'</div>';
+					friendsId_back.push("${regVO1.member_no}");
+					friendsName_back.push("${memSvc.getOneMem(regVO1.member_no).mb_name}");
+				}
+
+
+			
+			for (var i = 0; i < friends.length; i++) {
+				for (var j = 0 ; j < friendsId_back.length ; j++){
+					if(friends[i] == friendsId_back[j]){
+						$("#mem_" + friendsId_back[j]).empty();
+						var h2 = '<button style="background:transparent; border:unset;"value='+friendsId_back[j]+'>' +  friendsName_back[j] + '</h2>'
+						var image = '<div style="margin: auto 0;"><img src="<%=request.getContextPath()%>/img/online2.png" alt="" width="15px" height="15px"></div>';
+						var memPic = '<div><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/MemServlet?action=view_memPic&member_no='+ friendsId_back[j] +'"/></div>';
+						$("#mem_" + friendsId_back[j]).append(image);
+						$("#mem_" + friendsId_back[j]).append(memPic);
+						$("#mem_" + friendsId_back[j]).append(h2);
+						
+					}
+				}
+			}
+
+			</c:forEach> 
+			
+			
+			/*addListener start*/
+			 <c:forEach var="regVO1" items="${regSvc.getAllRegisterByApName(regVO.ap_name)}">
+			  var switcher_${regVO1.member_no} = 1;
+			  $("#mem_${regVO1.member_no}").click(function() {
+				  if (switcher_${regVO1.member_no} == 1){
+				    $("#chat-circle").toggle(500);
+				    $(".chat-box").toggle(500);	
+				    var friend = event.target.value;
+				    var friendName = "${memSvc.getOneMem(regVO1.member_no).mb_name}";
+				    contactName.innerHTML = friendName; 
+					updateFriendName(friend);
+					var jsonObj = {
+							"type" : "history",
+							"sender" : self,
+							"receiver" : friend,
+							"message" : ""
+						};
+					webSocket.send(JSON.stringify(jsonObj));
+
+					switcher_${regVO1.member_no} = 2;
+
+				  }
+				  else{
+				    $("#chat-circle").toggle(500);
+				    $(".chat-box").toggle(500);	
+				    $(".chat-logs").empty();
+				    switcher_${regVO1.member_no} = 1;
+				  }
+			  })
+			  </c:forEach>	 
+			  /*addListener end*/
+			  
+			  
+			  $(".chat-box-toggle").click(function() {
+			    $("#chat-circle").toggle(500);
+			    $(".chat-box").toggle(500);
+				  <c:forEach var="regVO1" items="${regSvc.getAllRegisterByApName(regVO.ap_name)}">
+				  switcher_${regVO1.member_no} = 1;
+				  </c:forEach>
+				  console.log("change")
+				  $(".chat-logs").empty();
+			  })
+			  
+
+
+		}
+
+		function updateFriendName(name) {
+			statusOutput.innerHTML = name;
+		}
+	</c:if>
+	</script>	
+	
 </html>

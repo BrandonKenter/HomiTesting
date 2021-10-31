@@ -6,7 +6,7 @@
 <%@ page import="com.comp.model.*"%>
 <%@ page import="com.mem.model.*"%>
 <%@ page import="com.reg.model.*"%>
-
+<%@ page import="com.apt.model.*"%>
 
 <jsp:useBean id="compSvc" scope="page" class="com.comp.model.CompService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
@@ -18,7 +18,9 @@
 	RegService regSvc = new RegService();
 	RegVO regVO = regSvc.getOneRegister(memVO.getMember_no());
 	pageContext.setAttribute("regVO", regVO);
-
+	AptService aptSvc = new AptService();
+	AptVO aptVO = aptSvc.getOneAptByApName(regVO.getAp_name());
+	pageContext.setAttribute("aptVO", aptVO);
 
 %>
 <html>
@@ -26,6 +28,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/front/chatbox.css" type="text/css" />
 <title>AllCaseForTenant</title>
 
 <style>
@@ -210,7 +213,7 @@ textarea.form-control {
     width: 50%
 }
 .balance{
-	margin:38px 50px;
+	margin:38px 0px;
 	border-radius:50px;
 	backdrop-filter: blur(5px);
 	background-color:#80808021;
@@ -224,6 +227,13 @@ textarea.form-control {
   background-color: transparent;
   color: #fff;
 
+}
+
+.w-100{
+	height: 250px;
+	width: 80% !important;
+	margin: 20px 44px;
+	overflow:hidden;
 }
 /* header */
 nav{
@@ -354,26 +364,56 @@ nav{
 		</c:forEach>
 	</ul>
 </c:if>
+<c:if test="${memVO != null}">
+<!-- chatbox -->
+<div id="chat-circle" class="btn btn-raised">
+        <div id="chat-overlay"></div>
+        <i class="fas fa-sms"></i>
+</div>
+<div class="chat-box">
+    <div class="chat-box-header">
+      <i class="far fa-gem" style="margin-right:5px"></i>Online Contact
+      <span class="chat-box-toggle"><i class="fas fa-minus"></i></span>
+    </div>
+    <div class="chat-box-body">
+      <div class="chat-box-overlay">   
+      </div>
+      <div class="chat-logs">
+       
+      </div><!--chat-log -->
+    </div>
+    <div class="chat-input">      
+      <input type="text" id="chat-input" placeholder="Send a message..." onkeydown="if (event.keyCode == 13) sendMessage();"/>
+      <button class="chat-submit" id="chat-submit"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+<!-- chatbox -->
+</c:if>
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="balance" >
-			<h1>Your current balance is :</h1>
-			<br>
-			<div style="font-size:50px;">${memVO.balance}</div>
-			<br><br><br>
-			<a href="<%=request.getContextPath()%>/front-end/bal/displayBalForTenant.jsp"><input type="button" class="btn btn-primary submit" value="Make a payment"></a>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<section id="contact">
-			<h1>My Rent</h1>
+			<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="${pageContext.request.contextPath}/apt/apt.do?action=view_aptPic1&ap_name=${aptVO.ap_name}" class="d-block w-100" alt="...">
+			    </div>
+			    <div class="carousel-item">
+				  <img src="${pageContext.request.contextPath}/apt/apt.do?action=view_aptPic2&ap_name=${aptVO.ap_name}" class="d-block w-100" alt="...">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="${pageContext.request.contextPath}/apt/apt.do?action=view_aptPic3&ap_name=${aptVO.ap_name}" class="d-block w-100" alt="...">
+			    </div>
+			  </div>
+			</div>
+
+			<div style="padding:35px 0px">
 			<div class="form-group">
 		    	<label for="apName">Apartment Name</label>
 		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getAp_name()%>" id="apName"  disabled="disabled"></span>
 		  	</div>
 			<div class="form-group">
 		    	<label for="apAddress">Apartment Address</label>
-		    	<span><input type="text" class="form-control" value="<%= (regVO==null)? "" : regVO.getAp_address()%>" id="apAddress"  disabled="disabled"></span>
+		    	<span><textarea class="form-control" cols="2" rows="2" id="apAddress"  disabled="disabled">${regVO.ap_address}</textarea></span>
 		  	</div>
 			<div class="form-group">
 		    	<label for="landName">LandLord Name</label>
@@ -396,14 +436,22 @@ nav{
                    </c:otherwise>
 	            </c:choose>  
 		  	</div>
-		  	<a href="<%=request.getContextPath()%>/front-end/reg/addReg.jsp"><input type="button" class="btn btn-primary submit" value="Register new rent"></a>
-		</section>
+		  	</div>
+		</div>
 	</div>
-<div style="text-align:center;"><h1 class="shadow p-3 mb-1 rounded" style="display:inline-block;">All the cases</h1></div>
+	<div class="col-md-8">
+		<section id="contact">
+								<h1>My Rent</h1>
+<c:forEach var="regVO1" items="${regSvc.getAllRegisterByApName(aptVO.ap_name)}">
+			<div>${regVO1.status}</div>
+			</c:forEach>
+		</section>
+
+<div style="text-align:center;"><h3 class="shadow p-3 mb-1 rounded" style="display:inline-block;">All the cases in your community</h3></div>
 <table id="forum" class="table table-hover">
 	 <thead style="background-color:#126E7D">
 		<tr>		
-			<th>Apartment Name</th>
+			<th>Tenant</th>
 			<th>Case Title</th>
 			<th>Status</th>
 			<th>Priority</th>			
@@ -413,7 +461,7 @@ nav{
 	<c:forEach var="compVO" items="${compSvc.getAllCompByMemNo(memVO.member_no)}">		
 		<tbody>
 			<tr>
-				<td>${compVO.ap_name}</td>
+				<td>${memSvc.getOneMem(compVO.member_no).mb_name}</td>
 
 				<td style=" font-size:large;">
 					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/comp/displayOneCompForTenate.jsp?complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
@@ -439,6 +487,7 @@ nav{
 		</tbody>			
 	</c:forEach>
 </table>
+	</div>
 </div>
 </div>
 </body>
@@ -475,4 +524,137 @@ function loginFirst(){
 
 
 </script>
+	<script>
+	<c:if test="${memVO != null}">
+		  var INDEX = 0; 
+		  var memberImg = "<%=request.getContextPath()%>/MemServlet?action=view_memPic&member_no=${memVO.member_no}";
+		  var empImg = "<%=request.getContextPath()%>/img/avatar/csAvatar.jpg";
+		  $("#chat-submit").click(sendMessage);
+		  
+		  function sendMsg() {
+		    var msg = $("#chat-input").val(); 
+		    if(msg.trim() == ''){
+		      return false;
+		    }
+		    generate_message(msg, 'member');
+		  }
+		  function generate_message(msg, type) {
+		    INDEX++;
+		    let img;
+		    type === "member" ? img = memberImg : img = empImg
+		    var str="";
+		    str += "<div id='cm-msg-"+INDEX+"' class=\"chat-msg "+type+"\">";
+		    str += "          <span class=\"msg-avatar\">";
+		    str += "            <img src=\"" + img + "\">";
+		    str += "          <\/span>";
+		    str += "          <div class=\"cm-msg-text\">";
+		    str += msg;
+		    str += "          <\/div>";
+		    str += "        <\/div>";
+		    $(".chat-logs").append(str);
+		    $("#cm-msg-"+INDEX).hide().fadeIn(300);
+		    $("#chat-input").val(''); 
+		    $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight}, 1000);    
+		  }  
+		  
+		  $("#chat-circle").click(function() {  
+			if (webSocket == null){
+				connect();
+			}
+		    $("#chat-circle").toggle(500);
+		    $(".chat-box").toggle(500);	
+		  })
+		  
+		  $(".chat-box-toggle").click(function() {
+		    $("#chat-circle").toggle(500);
+		    $(".chat-box").toggle(500);
+		  })
+		 //WebSocket
+        var MyPoint = "/FriendWS/${memVO.member_no}";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+		var empID;
+		var empName;
+		var webSocket = null;
+	
+		function connect() {
+			// create a websocket
+			webSocket = new WebSocket(endPointURL);
+	
+			webSocket.onopen = function(event) {
+				console.log("Connect Success!");
+				document.getElementById('chat-input').disabled = false;
+			}
+	
+			webSocket.onmessage = function(event) {
+				var jsonObj = JSON.parse(event.data);
+				if ("open" === jsonObj.type) {
+					empID = jsonObj.empID;
+					empImg = "<%=request.getContextPath()%>/emp/emp.do?action=getEmpPic&emp_id=" + empID;
+					empName = jsonObj.empName;
+					let msg = jsonObj.message;
+					generate_message(msg, "emp")
+				} else if ("history" === jsonObj.type) {
+					let memberID;
+					if (jsonObj.sender.indexOf("MEM") >= 0){
+						memberID = jsonObj.sender;
+					} else {
+						memberID = jsonObj.receiver;
+					}
+					var messages = JSON.parse(jsonObj.message);
+					for (var i = 0; i < messages.length; i++) {
+						var historyData = JSON.parse(messages[i]);
+						var msg = historyData.message;
+						var time = historyData.time;
+						let type = "";
+						historyData.sender.indexOf("MEM") >= 0 ? type = 'member' : type = 'emp';
+						generate_message(msg, type)
+					}
+				} else if ("chat" === jsonObj.type) {
+					let msg = jsonObj.message;
+					let type;
+					jsonObj.sender.indexOf("MEM") >= 0 ? type = 'member' : type = 'emp';
+					generate_message(msg, type)
+				} else if ("empNotAvailable" === jsonObj.type){
+					generate_message("Hi, can I help you?", "emp")
+				}
+			};
+	
+			webSocket.onclose = function(event) {
+				console.log("Disconnected!");
+			};
+		}
+		
+		function sendMessage() {
+			var inputMessage = document.getElementById("chat-input");
+			var memberID = "${member.mb_id}";
+			var memberName = "${member.mb_name}";
+			var message = inputMessage.value.trim();
+			let time = new Date();
+			let timeStr = time.getFullYear() + "-" + (time.getMonth()+1).toString().padStart(2, "0") + "-" 
+						+ time.getDate() + " " + time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0");
+			if (message === "") {
+				inputMessage.focus();
+				return;
+			} else {
+				var jsonObj = {
+					"type" : "chat",
+					"sender" : memberID + "-" + memberName,
+					"receiver" : empID + "-" + empName,
+					"message" : message,
+					"time": timeStr,
+				};
+				webSocket.send(JSON.stringify(jsonObj));
+				inputMessage.value = "";
+				inputMessage.focus();
+			}
+		}
+		
+		function disconnect() {
+			if (webSocket != null) webSocket.close();
+		}
+	</c:if>
+	</script>
 </html>

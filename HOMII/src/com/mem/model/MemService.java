@@ -23,6 +23,9 @@ public class MemService {
 	public MemVO getOneMem(Integer member_no) {
 		return dao.findByPrimaryKey(member_no);
 	}
+	public MemVO getOneMem(String mb_name) {
+		return dao.findByPrimaryKeyByMbName(mb_name);
+	}
 	
 	public MemVO addMem(String mb_name, String mb_email, String mb_pwd, byte[] mb_pic,
 			 String mb_phone, String mb_address, String membership) {
