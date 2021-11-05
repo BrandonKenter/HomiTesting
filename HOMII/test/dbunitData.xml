@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>      
+		<!--apt Table -->
+		<apartment AP_NO="1" MEMBER_NO="1" AP_ADDRESS="University ave" AP_PIC1= "NULL" AP_PIC2= "NULL" AP_PIC3= "NULL"  RATING = "5"/>
+	</dataset>
