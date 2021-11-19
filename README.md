@@ -243,11 +243,14 @@ And two additional features:
  ![image](https://user-images.githubusercontent.com/91846668/140576544-0eac5b88-478f-4f27-9d7e-4b97dd89c367.png)
  
 **4. Rating system**
+
+*Please note it's needed to update MySLQ script first: http://tiny.cc/6mpluz)
+
 (Since "My property" is not constructed, the rating function is just for demo)
 
 **4.1 Run the rating page (addRate.jsp) in the project folder**
 
-(It will be linked through "My property" page then)
+(It will be linked through "My property" page in next iteration)
 
 ![image](https://user-images.githubusercontent.com/91846668/142686631-2e17b7ae-e951-41cb-9618-0592d1d53d70.png)
 
