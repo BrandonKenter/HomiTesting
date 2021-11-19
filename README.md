@@ -337,6 +337,20 @@ And two additional features:
 
 
 
+## Testing instruction
+
+- As long as you have installed the latest FireFox, Google Chrome, and Safari browser on your PC/laptop, you would be successfully running the Selenium tests. Otherwise, it would cause some errors once you have not installed one of those browsers that we mentioned above. 
+
+- Google Chrome Download Link
+	- Windows: https://www.google.com/intl/en_us/chrome/
+	- MacOS: https://www.google.com/chrome/browser/desktop/index.html
+
+- FireFox Download Link:
+	- https://www.mozilla.org/firefox/download/thanks/
+
+- Safari Download Link:
+	- Windows OS: https://support.apple.com/downloads/safari
+	- MacOS: No need to Download again. 
 
 
 
