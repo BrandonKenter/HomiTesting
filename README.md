@@ -137,6 +137,15 @@ There may still have error after doing the procedure above, if it is, please che
 ![image](https://user-images.githubusercontent.com/91846668/136495868-f62c9b8f-f265-4c49-96d6-c9d257a7aebc.png)
 
 
+2.8 Download Google Cloud Tools for Eclipse
+In Eclipse, select Help -> Eclipse Marketplace -> Google Cloud Tools for Eclipse 1.8.4 -> Install -> Confirm (this may take a while) -> Accept License -> Select box to trust signers -> Trust Selected
+
+2.9 Restart Eclipse when prompted (or manually)
+When opening Eclipse again, wait for Google Cloud SDK to download and configure (this may take a while)
+
+3.0 Add GCP Library to build path
+Right click Homii folder in Project Explorer -> Build Path -> Configure Build Path -> Libraries -> Add Library -> Google Cloud Platform Libraries -> Next -> Select "Cloud Storage" -> Finish -> Apply and Close
+
 ## Usage instruction
 
 
