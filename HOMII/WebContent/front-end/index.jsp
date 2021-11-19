@@ -259,7 +259,7 @@ p {
 <div id="bgimg">
 <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HÃ¶MI</h2></a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HöMI</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -276,15 +276,6 @@ p {
 	                    </c:choose>    	
                     </li>
 		    <li class="nav-item">
-	                    <c:choose>
-	                         <c:when test="${memVO==null || memVO.member_no==99 }">
-	                               <li><a class="nav-link" aria-current="page" href="#" onclick="loginFirst()">My Archive</a></li>
-	                         </c:when>
-	                         <c:otherwise>
-	                         	<li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/archive/myArchive.jsp">My Archive</a></li>
-	                         </c:otherwise>
-	                    </c:choose>    	
-                    </li><li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO==null || memVO.member_no==99 }">
 	                               <li><a class="nav-link" aria-current="page" href="#" onclick="loginFirst()">My Archive</a></li>
@@ -394,7 +385,7 @@ p {
     <div class="container">
     	<div class="row" >
     		<div class="col-md-12">
-    			<h1 class="text-white titlefont">Welcome to HÃ¶MI</h1>
+    			<h1 class="text-white titlefont">Welcome to HöMI</h1>
     			<p class="text-white parafont">A good place to find your perfect apartment</p>
     			<div class="searchdiv" style="display:none;">
     				<form method="post">

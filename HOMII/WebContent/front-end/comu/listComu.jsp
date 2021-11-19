@@ -256,7 +256,7 @@ nav{
 <body onload="connect();" onunload="disconnect();">
 <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HÃ¶MI</h2></a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HöMI</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -487,7 +487,7 @@ nav{
 				<td>${memSvc.getOneMem(compVO.member_no).mb_name}</td>
 
 				<td style=" font-size:large;">
-					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/comp/displayOneCompForTenate.jsp?complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
+					<a class="notJQellipsis" href="<%=request.getContextPath()%>/comp/comp.do?action=getOne_For_Display&complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
 				</td>		
 			    <c:choose>
                    <c:when test="${compVO.status==0}">
