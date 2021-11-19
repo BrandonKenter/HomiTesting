@@ -35,6 +35,14 @@
     <servlet-name>CommentServlet</servlet-name>
     <url-pattern>/comment/comment.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>RateServlet</servlet-name>
+    <servlet-class>com.rate.controller.RateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RateServlet</servlet-name>
+    <url-pattern>/rate/rate.do</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>CompServlet</servlet-name>
