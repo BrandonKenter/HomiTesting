@@ -1,6 +1,7 @@
 package com.apt.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,16 +19,11 @@ import com.mem.model.MemVO;
 
 
 public class AptDAO implements AptDAO_interface{
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/HOMII");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
-	
+
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://localhost:3306/homii?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "123456";
 	private static final String GET_ALL_STMT_BY_MEMNO = "SELECT * FROM apartment where member_no = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM apartment where ap_no = ?";
 	private static final String GET_ONE_STMT_BY_AP_NAME = "SELECT * FROM apartment where ap_name = ?";
@@ -43,7 +39,8 @@ public class AptDAO implements AptDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setInt(1, apt_no);
 			rs = pstmt.executeQuery();
@@ -64,6 +61,9 @@ public class AptDAO implements AptDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -100,7 +100,8 @@ public class AptDAO implements AptDAO_interface{
 		
 		try {
 			
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT_BY_AP_NAME);
 			pstmt.setString(1, ap_name);
 			rs = pstmt.executeQuery();
@@ -121,6 +122,9 @@ public class AptDAO implements AptDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -155,7 +159,8 @@ public class AptDAO implements AptDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_PIC_BY_AP_NAME);
 
 			pstmt.setString(1, ap_name);
@@ -171,6 +176,9 @@ public class AptDAO implements AptDAO_interface{
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -197,13 +205,15 @@ public class AptDAO implements AptDAO_interface{
 		return aptVO;
 	}
 	
-	public void insert(AptVO aptVO) {
+	public int insert(AptVO aptVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		int num = 0;
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, aptVO.getMember_no());
@@ -213,7 +223,7 @@ public class AptDAO implements AptDAO_interface{
 			pstmt.setBytes(5, aptVO.getAp_pic2());
 			pstmt.setBytes(6, aptVO.getAp_pic3());
 
-			pstmt.executeUpdate();
+			num = pstmt.executeUpdate();
 
 			
 
@@ -221,6 +231,9 @@ public class AptDAO implements AptDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -237,6 +250,7 @@ public class AptDAO implements AptDAO_interface{
 				}
 			}
 		}
+		return num;
 
 	}
 	
@@ -251,7 +265,8 @@ public class AptDAO implements AptDAO_interface{
 		
 		try {
 			
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT_BY_MEMNO);
 			pstmt.setInt(1, member_no);
 			rs = pstmt.executeQuery();
@@ -274,6 +289,9 @@ public class AptDAO implements AptDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {

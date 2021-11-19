@@ -1,6 +1,7 @@
 package com.comp.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,15 +18,10 @@ import com.mem.model.MemVO;
 
 
 public class CompDAO implements CompDAO_interface{
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/HOMII");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://localhost:3306/homii?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO complaint (member_no, ap_name, ap_address, land_name, case_title, description, pubtype, comp_pic, comp_vid, priority) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM complaint where land_name = ?";
@@ -34,13 +30,16 @@ public class CompDAO implements CompDAO_interface{
 	private static final String GET_ONE_PIC = "SELECT comp_pic FROM complaint WHERE complaint_no=?";
 	private static final String UPDATERES = "UPDATE complaint set status=?, response=? where complaint_no = ?";
 	
-	public void insert(CompVO compVO) {
+	public int insert(CompVO compVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		int num = 0;
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			con.createStatement();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, compVO.getMember_no());
@@ -54,7 +53,7 @@ public class CompDAO implements CompDAO_interface{
 			pstmt.setBytes(9, compVO.getComp_vid());
 			pstmt.setString(10, compVO.getPriority());
 
-			pstmt.executeUpdate();
+			num = pstmt.executeUpdate();
 
 			
 
@@ -62,6 +61,9 @@ public class CompDAO implements CompDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -78,7 +80,7 @@ public class CompDAO implements CompDAO_interface{
 				}
 			}
 		}
-
+		return num;
 	}
 	
 	@Override
@@ -92,7 +94,8 @@ public class CompDAO implements CompDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			pstmt.setString(1, land_name);
 			rs = pstmt.executeQuery();
@@ -121,6 +124,9 @@ public class CompDAO implements CompDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -157,7 +163,8 @@ public class CompDAO implements CompDAO_interface{
 		
 		try {
 			
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT_BY_MEMNO);
 			pstmt.setInt(1, member_no);
 			rs = pstmt.executeQuery();
@@ -186,6 +193,9 @@ public class CompDAO implements CompDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -222,7 +232,8 @@ public class CompDAO implements CompDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setInt(1, complaint_no);
 			rs = pstmt.executeQuery();
@@ -249,6 +260,9 @@ public class CompDAO implements CompDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -283,7 +297,8 @@ public class CompDAO implements CompDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_PIC);
 
 			pstmt.setInt(1, complaint_no);
@@ -297,6 +312,9 @@ public class CompDAO implements CompDAO_interface{
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -322,13 +340,14 @@ public class CompDAO implements CompDAO_interface{
 		}
 		return compVO;
 	}
-	public void updateRes(CompVO compVO) {
+	public int updateRes(CompVO compVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		int num = 0;
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATERES);
 			
 			pstmt.setString(1, compVO.getStatus());
@@ -337,7 +356,7 @@ public class CompDAO implements CompDAO_interface{
 
 
 
-			pstmt.executeUpdate();
+			num = pstmt.executeUpdate();
 
 			
 
@@ -345,6 +364,9 @@ public class CompDAO implements CompDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -361,6 +383,6 @@ public class CompDAO implements CompDAO_interface{
 				}
 			}
 		}
-
+		return num;
 	}
 }

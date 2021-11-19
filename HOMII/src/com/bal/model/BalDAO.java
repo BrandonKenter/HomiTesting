@@ -1,6 +1,7 @@
 package com.bal.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,27 +15,23 @@ import javax.sql.DataSource;
 
 
 public class BalDAO implements BalDAO_interface{
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/HOMII");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
-	
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://localhost:3306/homii?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "123456";
 	private static final String GET_ALL_STMT_BY_MEMNO = "SELECT * FROM balance where member_no = ?";
 	private static final String GET_ALL_STMT_BY_LAND = "SELECT * FROM balance where land_no = ?";
 	private static final String INSERT_STMT = "INSERT INTO balance (member_no, land_no, type, price, crt_dt) VALUES (?, ?, ?, ?, default)";
 	
-	public void insert(BalVO balVO) {
+	public int insert(BalVO balVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		int num = 0;
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, balVO.getMember_no());
@@ -42,7 +39,7 @@ public class BalDAO implements BalDAO_interface{
 			pstmt.setString(3, balVO.getType());
 			pstmt.setFloat(4, balVO.getPrice());
 
-			pstmt.executeUpdate();
+			num = pstmt.executeUpdate();
 
 			
 
@@ -50,6 +47,9 @@ public class BalDAO implements BalDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -66,7 +66,7 @@ public class BalDAO implements BalDAO_interface{
 				}
 			}
 		}
-
+		return num;
 	}
 	
 
@@ -80,7 +80,8 @@ public class BalDAO implements BalDAO_interface{
 		
 		try {
 			
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT_BY_MEMNO);
 			pstmt.setInt(1, member_no);
 			rs = pstmt.executeQuery();
@@ -101,6 +102,9 @@ public class BalDAO implements BalDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -136,7 +140,8 @@ public class BalDAO implements BalDAO_interface{
 		
 		try {
 			
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT_BY_LAND);
 			pstmt.setInt(1, member_no);
 			rs = pstmt.executeQuery();
@@ -157,6 +162,9 @@ public class BalDAO implements BalDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
