@@ -74,7 +74,7 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 
 -> click refresh button on the up-right side of left box
 
-(Download MySQL script: http://tiny.cc/3n2kuz)
+(Download MySQL script: http://tiny.cc/6mpluz)
 
 ![image](https://user-images.githubusercontent.com/91846668/136495072-74191733-237f-46ae-8a96-1138f1d8d4ea.png)
 
@@ -152,13 +152,15 @@ Right click Homii folder in Project Explorer -> Build Path -> Configure Build Pa
 ## Usage instruction
 
 
-The functions we have now can be summarized in three main features:
+The functions we have now can be summarized in four main features: 
 
 - Create account & account management 
 
 - My rental  management
 
 - Create complain case & case tracing
+
+- Rating system
 
 And two additional features:
 
@@ -239,12 +241,26 @@ And two additional features:
 - Go to “My rent” tab to check all the cases you have issued.
 
  ![image](https://user-images.githubusercontent.com/91846668/140576544-0eac5b88-478f-4f27-9d7e-4b97dd89c367.png)
+ 
+**4. Rating system**
+(Since "My property" is not constructed, the rating function is just for demo)
+
+**4.1 Run the rating page (addRate.jsp) in the project folder**
+
+(It will be linked through "My property" page then)
+
+![image](https://user-images.githubusercontent.com/91846668/142686631-2e17b7ae-e951-41cb-9618-0592d1d53d70.png)
+
+**4.2 Enter the ratings and comments**
+
+![image](https://user-images.githubusercontent.com/91846668/142686857-81703590-182f-46ca-98d1-24913414af13.png)
+
 
 **[Additional features]**
 
-**4. Apartment management function (for landlord)**
+**5. Apartment management function (for landlord)**
 
-**4.1 Sign up as landlord**
+**5.1 Sign up as landlord**
 
 - Select “landlord” when signing up (as below).
 
@@ -252,7 +268,7 @@ And two additional features:
 
  ![image](https://user-images.githubusercontent.com/91846668/140576579-08a56ad8-7858-4c09-a21d-a622959e66f5.png)
  
-**4.2 Add apartment**
+**5.2 Add apartment**
 
 - Go to “My Property” tab.
 
@@ -262,7 +278,7 @@ And two additional features:
 
  ![image](https://user-images.githubusercontent.com/91846668/140576597-091f7bae-4941-419b-9d45-18bb92adb954.png)
  	
-**4.3 Response complain cases**
+**5.3 Response complain cases**
 
 - Go to “My Property” tab.
 
@@ -273,9 +289,9 @@ And two additional features:
  ![image](https://user-images.githubusercontent.com/91846668/140576625-9004e379-a7f0-45f5-8129-7c8c029ae4cb.png)
 
  
-**5. Payment function**
+**6. Payment function**
 
-**5.1 Add credit card**
+**6.1 Add credit card**
 
 - Go to “Member Center” tab
 
@@ -285,7 +301,7 @@ And two additional features:
 
   ![image](https://user-images.githubusercontent.com/91846668/140576644-7513423f-be9d-41b7-af37-d37073446f0c.png)
  
-**5.2 View balance**
+**6.2 View balance**
 
 - Go to “My rent” tab
 
@@ -293,7 +309,7 @@ And two additional features:
 
   ![image](https://user-images.githubusercontent.com/91846668/140576661-e024f1c8-d50b-41e9-bcb7-ddf6bc6bacb9.png)
  
-**5.3 Pay rental fee**
+**6.3 Pay rental fee**
 
 - Go to “My rent” tab
 
@@ -304,7 +320,7 @@ And two additional features:
   ![image](https://user-images.githubusercontent.com/91846668/140576684-7b27649f-1a33-4e90-a8e7-0c40c45a2f9f.png)
 
 	 
-**5.4 Add fee (for landlord)**
+**6.4 Add fee (for landlord)**
 
 - Go to “Payment System” tab
 
