@@ -292,9 +292,23 @@ nav{
 	                    </c:choose> 
                     </li>
                     <li class="nav-item">
+                    	<c:choose>
+	                         <c:when test="${memVO==null || memVO.member_no==99 }">
+	                               <li><a class="nav-link" aria-current="page" href="#" onclick="loginFirst()">My community</a></li>
+	                         </c:when>
+	                         <c:otherwise>
+	                         	<c:choose>
+	                         		<c:when test="${memVO.membership == 0}">
+	  	                       			<li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/comu/listComu.jsp">My community</a></li>
+	                         		</c:when>
+	                         	</c:choose>
+	                         </c:otherwise>
+	                    </c:choose> 
+                    </li>
+                    <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
-	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
+	                          <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
 	                         </c:when>
 	                         <c:otherwise>
 	                         </c:otherwise>
@@ -342,7 +356,7 @@ nav{
 						</c:when>
 						<c:otherwise>
 								<img src="${pageContext.request.contextPath}/mem/DBGifReader4.do?member_no=${memVO.member_no}" 
-									id="${memVO.member_no}" alt=" width="60px;" height="60px" 
+									id="${memVO.member_no}" alt=" width="50px;" height="50px" 
 									class="clickable" />
 								<a class="text-white" id="welcome"> ${memVO.mb_name} &nbsp</a>
 								<a id="logout-btn" href="<%=request.getContextPath()%>/front-end/mem/MemLogout.jsp"> Logout </a>
@@ -355,7 +369,6 @@ nav{
             </div>
         </div>
     </nav>
-
 <div class="container-fluid forum-body" style="min-height:450px;">
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">Fix error as below:</font>
