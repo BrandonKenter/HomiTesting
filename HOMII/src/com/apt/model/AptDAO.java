@@ -33,6 +33,8 @@ public class AptDAO implements AptDAO_interface{
 	private static final String GET_ONE_STMT_BY_AP_NAME = "SELECT * FROM apartment where ap_name = ?";
 	private static final String GET_ONE_PIC_BY_AP_NAME = "SELECT ap_pic1, ap_pic2, ap_pic3 FROM APARTMENT WHERE AP_NAME=?";
 	private static final String INSERT_STMT = "INSERT INTO apartment (member_no, ap_name, ap_address, ap_pic1, ap_pic2, ap_pic3) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT_DESC = "SELECT * FROM apartment order by rating desc;";
+	private static final String GET_ALL_STMT_ASC = "SELECT * FROM apartment order by rating asc;";
 	@Override
 	public AptVO findByPrimaryKey(Integer apt_no) {
 		
@@ -254,6 +256,124 @@ public class AptDAO implements AptDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT_BY_MEMNO);
 			pstmt.setInt(1, member_no);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				aptVO = new AptVO();
+				aptVO.setAp_no(rs.getInt("ap_no"));
+				aptVO.setMember_no(rs.getInt("member_no"));
+				aptVO.setAp_name(rs.getString("ap_name"));
+				aptVO.setAp_address(rs.getString("ap_address"));
+				aptVO.setAp_pic1(rs.getBytes("ap_pic1"));
+				aptVO.setAp_pic2(rs.getBytes("ap_pic2"));
+				aptVO.setAp_pic3(rs.getBytes("ap_pic3"));
+				aptVO.setRating(rs.getFloat("rating"));
+				
+				list.add(aptVO); // Store the row in the list
+			}
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<AptVO> getAllDesc() {
+		List<AptVO> list = new ArrayList<AptVO>();
+		AptVO aptVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_STMT_DESC);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				aptVO = new AptVO();
+				aptVO.setAp_no(rs.getInt("ap_no"));
+				aptVO.setMember_no(rs.getInt("member_no"));
+				aptVO.setAp_name(rs.getString("ap_name"));
+				aptVO.setAp_address(rs.getString("ap_address"));
+				aptVO.setAp_pic1(rs.getBytes("ap_pic1"));
+				aptVO.setAp_pic2(rs.getBytes("ap_pic2"));
+				aptVO.setAp_pic3(rs.getBytes("ap_pic3"));
+				aptVO.setRating(rs.getFloat("rating"));
+				
+				list.add(aptVO); // Store the row in the list
+			}
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<AptVO> getAllAsc() {
+		List<AptVO> list = new ArrayList<AptVO>();
+		AptVO aptVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_STMT_ASC);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

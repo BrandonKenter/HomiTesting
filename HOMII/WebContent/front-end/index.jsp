@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.mem.model.*"%>
+<%@ page import="com.apt.model.*"%>
+<%@ page import="com.comp.model.*"%>
+<%@ page import="java.util.*"%>
+<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 <%
 	MemVO memVO = (MemVO) session.getAttribute("memVO");
 	if(memVO == null){
@@ -10,6 +14,17 @@
 		memVO.setMember_no(99);
 	}
 	pageContext.setAttribute("memVO", memVO);
+	
+	AptService aptSvc = new AptService();
+	List<AptVO> topApt = aptSvc.getAllTop();
+	pageContext.setAttribute("topApt", topApt);
+	List<AptVO> bottomApt = aptSvc.getAllBottom();
+	pageContext.setAttribute("bottomApt", bottomApt);
+	
+	CompService compSvc = new CompService();
+	List<CompVO> latestCase = compSvc.getAllLatestCase();
+	pageContext.setAttribute("latestCase",latestCase);
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -46,7 +61,7 @@ p {
 
 .card {
     width: 280px;
-    height: 520px;
+    height: 540px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background: #fff;
     transition: all 0.5s ease;
@@ -219,7 +234,7 @@ p {
 .title1{
 	position:relative;
 	top:35px;
-	margin-left:230px;
+	margin-left:110px;
 	font-family: system-ui;
 }
 
@@ -397,117 +412,96 @@ p {
     	</div>
     </div>	
 </div>
-<h2 class="title1">New Cases</h2>
+<h2 class="title1">Top Apartments</h2>
 <div class="container">
     <div class="d-lg-flex">
+    <c:forEach var="aptVO" items="${topApt}" begin="0" end="3">
+    <a href="<%=request.getContextPath()%>/apt/apt.do?action=getOne_For_Display&ap_no=${aptVO.ap_no}" style="text-decoration:none;">
         <div class="card border-0 me-lg-4 mb-lg-0 mb-4">
             <div class="backgroundEffect"></div>
-            <div class="pic"> <img class="" src="<%=request.getContextPath()%>/img/apt1.jpg" alt="">
-                <div class="date"> <span class="day">28</span> <span class="month">Sep</span> <span class="year">2019</span> </div>
+            <div class="pic"><img src="${pageContext.request.contextPath}/apt/DBGifReader4.do?ap_no=${aptVO.ap_no}"  alt="">
             </div>
             <div class="content">
-                <p class="h-1 mt-4">Hilldale Tower Apartment apt 400</p>
-                <p class="text-muted mt-3">Status: Unsolved,<br> Rating: 1.1,<br> Comments: Woest apartment ever! The numbers never add up, and the lease stuff really need to take some alg classes. They make you pay for the mistake they made ... </p>
-                <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
-                    <div class="btn btn-primary">Read More<span class="fas fa-arrow-right"></span></div>
+                <p class="h-1 mt-4">${aptVO.ap_name}</p>
+                <p class="text-muted mt-3">Landlord: ${memSvc.getOneMem(aptVO.member_no).mb_name}, <br><br> Address: ${aptVO.ap_address}, <br><br>Rating: ${aptVO.rating} </p>
+                 <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
+                    <div class="btn btn-primary">See Detail<span class="fas fa-arrow-right"></span></div>
                     <div class="d-flex align-items-center justify-content-center foot">
-                        <p class="admin">TaiYen</p>
-                        <p class="ps-3 icon text-muted"><span class="fas fa-comment-alt pe-1"></span>3</p>
                     </div>
                 </div>
             </div>
         </div>
+   </a>
+   </c:forEach>
+    </div>
+</div>
+<h2 class="title1">Worst Apartments</h2>
+<div class="container">
+    <div class="d-lg-flex">
+    <c:forEach var="aptVO" items="${bottomApt}" begin="0" end="3">
+    <a href="<%=request.getContextPath()%>/apt/apt.do?action=getOne_For_Display&ap_no=${aptVO.ap_no}" style="text-decoration:none;">
         <div class="card border-0 me-lg-4 mb-lg-0 mb-4">
             <div class="backgroundEffect"></div>
-            <div class="pic"> <img class="" src="<%=request.getContextPath()%>/img/apt2.jpg" alt="">
-                <div class="date"> <span class="day">26</span> <span class="month">Sep</span> <span class="year">2019</span> </div>
+            <div class="pic"><img src="${pageContext.request.contextPath}/apt/DBGifReader4.do?ap_no=${aptVO.ap_no}"  alt="">
             </div>
             <div class="content">
-                <p class="h-1 mt-4">The Lodge apt 409</p>
-                <p class="text-muted mt-3">Status: Unsolved,<br> Rating: 1.5,<br> Comments: Not satisfying. Internet consistently drops. The central air conditioner never works when it is really needed, especially during weekends.</p>
+                <p class="h-1 mt-4">${aptVO.ap_name}</p>
+                <p class="text-muted mt-3">Landlord: ${memSvc.getOneMem(aptVO.member_no).mb_name}</p> 
+                <p class="text-muted mt-3">Address: ${aptVO.ap_address}</p>
+                <p class="text-muted mt-3">Rating: ${aptVO.rating} </p>
+                 <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
+                    <div class="btn btn-primary">See Detail<span class="fas fa-arrow-right"></span></div>
+                    <div class="d-flex align-items-center justify-content-center foot">
+                    </div>
+                </div>
+            </div>
+        </div>
+   </a>
+   </c:forEach>
+    </div>
+</div>
+<h2 class="title1">Latest Cases</h2>
+<div class="container">
+    <div class="d-lg-flex">
+        <c:forEach var="compVO" items="${latestCase}" begin="0" end="3">
+         <a href="<%=request.getContextPath()%>/comp/comp.do?action=getOne_For_Display&complaint_no=${compVO.complaint_no}" style="text-decoration:none;">
+        <div class="card border-0 me-lg-4 mb-lg-0 mb-4">
+            <div class="backgroundEffect"></div>
+            <div class="pic"><img src="${pageContext.request.contextPath}/apt/apt.do?action=view_aptPic1&ap_name=${compVO.ap_name}"  alt="">
+            </div>
+            <div class="content">
+                <p class="h-1 mt-4">${compVO.ap_name}</p>
+                <p class="text-muted mt-3">
+                Status: 			    
+                <c:choose>
+                   <c:when test="${compVO.status==0}">
+                         <td>Pending</td>
+                   </c:when>
+                   <c:when test="${compVO.status==1}">
+                         <td>Processing</td>
+                   </c:when>
+                   <c:when test="${compVO.status==2}">
+                         <td>Solved</td>
+                   </c:when>
+                   <c:otherwise>
+                   		 <td>Invalid Status</td>
+                   </c:otherwise>
+	            </c:choose>  
+			    </p>
+			    <p class="text-muted mt-3">Case Title: ${compVO.case_title}</p> 
+			    <p class="text-muted mt-3 cutText">Description : ${compVO.description}</p>
+			    <p class="text-muted mt-3 cutText">Date : ${compVO.crt_dt}</p>
                 <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
                     <div class="btn btn-primary">Read More<span class="fas fa-arrow-right"></span></div>
                     <div class="d-flex align-items-center justify-content-center foot">
-                        <p class="admin">Eason</p>
+                        <p class="admin">${memSvc.getOneMem(compVO.member_no).mb_name}</p>
                         <p class="ps-3 icon text-muted"><span class="fas fa-comment-alt pe-1"></span>1</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card border-0 mb-lg-0 mb-4">
-            <div class="backgroundEffect"></div>
-            <div class="pic"> <img class="" src="<%=request.getContextPath()%>/img/apt3.jpg" alt="">
-                <div class="date"> <span class="day">23</span> <span class="month">Sep</span> <span class="year">2019</span> </div>
-            </div>
-            <div class="content">
-                <p class="h-1 mt-4">Midvale Height Apartment apt 603</p>
-                <p class="text-muted mt-3">Status: Unsolved,<br> Rating: 1.5,<br> Comments: This is one of my worst experiences with renting an apartment I have ever had.
-[Terrible customer service]</p>
-                <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
-                    <div class="btn btn-primary">Read More<span class="fas fa-arrow-right"></span></div>
-                    <div class="d-flex align-items-center justify-content-center foot">
-                        <p class="admin">Tony</p>
-                        <p class="ps-3 icon text-muted"><span class="fas fa-comment-alt pe-1"></span>3</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<h2 class="title1">Popular Cases</h2>
-<div class="container">
-    <div class="d-lg-flex">
-        <div class="card border-0 me-lg-4 mb-lg-0 mb-4">
-            <div class="backgroundEffect"></div>
-            <div class="pic"> <img class="" src="<%=request.getContextPath()%>/img/apt4.jpg" alt="">
-                <div class="date"> <span class="day">15</span> <span class="month">Sep</span> <span class="year">2019</span> </div>
-            </div>
-            <div class="content">
-                <p class="h-1 mt-4">Oakland Apartment apt 304</p>
-                <p class="text-muted mt-3">Status: Solved,<br> Rating: 4.6,<br> Comments: Great front desk service and overall cleanliness in the building. Facilities were very good and the environment was great. Appliances in the ...</p>
-                <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
-                    <div class="btn btn-primary">Read More<span class="fas fa-arrow-right"></span></div>
-                    <div class="d-flex align-items-center justify-content-center foot">
-                        <p class="admin">Sam</p>
-                        <p class="ps-3 icon text-muted"><span class="fas fa-comment-alt pe-1"></span>9</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card border-0 me-lg-4 mb-lg-0 mb-4">
-            <div class="backgroundEffect"></div>
-            <div class="pic"> <img class="" src="<%=request.getContextPath()%>/img/apt5.jpg" alt="">
-                <div class="date"> <span class="day">02</span> <span class="month">Sep</span> <span class="year">2019</span> </div>
-            </div>
-            <div class="content">
-                <p class="h-1 mt-4">Vicinato Apartment apt 509</p>
-                <p class="text-muted mt-3">Status: Solved,<br> Rating: 2.9,<br> Comments: Same issue as what Talia had below, I was stood up on scheduled showing. The person in charge is really irresponsive. Dreadful customer service.</p>
-                <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
-                    <div class="btn btn-primary">Read More<span class="fas fa-arrow-right"></span></div>
-                    <div class="d-flex align-items-center justify-content-center foot">
-                        <p class="admin">Alex</p>
-                        <p class="ps-3 icon text-muted"><span class="fas fa-comment-alt pe-1"></span>17</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card border-0 mb-lg-0 mb-4">
-            <div class="backgroundEffect"></div>
-            <div class="pic"> <img class="" src="<%=request.getContextPath()%>/img/apt6.jpg" alt="">
-                <div class="date"> <span class="day">06</span> <span class="month">Sep</span> <span class="year">2019</span> </div>
-            </div>
-            <div class="content">
-                <p class="h-1 mt-4">The Regent Apartment apt 301</p>
-                <p class="text-muted mt-3">Status: Solved,<br> Rating: 4.9,<br> Comments: I loved living here! By far the best apartment I have had! Tammy and Ziggy were over the top amazing! Tammy was always so sweet and had...</p>
-                <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
-                    <div class="btn btn-primary">Read More<span class="fas fa-arrow-right"></span></div>
-                    <div class="d-flex align-items-center justify-content-center foot">
-                        <p class="admin">Gary</p>
-                        <p class="ps-3 icon text-muted"><span class="fas fa-comment-alt pe-1"></span>17</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </a>
+        </c:forEach>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -522,6 +516,17 @@ function loginFirst(){
 		window.location.href = "<%=request.getContextPath()%>/front-end/mem/MemLogin.jsp";
 	});
 }
+$(function(){
+    var len = 80; 
+    $(".cutText").each(function(i){
+        if($(this).text().length>len){
+            $(this).attr("title",$(this).text());
+            var text=$(this).text().substring(0,len-1)+"<a href=" + $(this).attr('href') + ">  ...<a>";
+            
+            $(this).html(text);
+        }
+    });
+});
 </script>
 </body>
 </html>

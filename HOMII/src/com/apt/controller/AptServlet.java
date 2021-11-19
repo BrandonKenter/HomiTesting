@@ -16,11 +16,6 @@ import javax.servlet.http.Part;
 
 import com.apt.model.AptService;
 import com.apt.model.AptVO;
-import com.comp.model.CompService;
-import com.comp.model.CompVO;
-import com.mem.model.MemService;
-import com.mem.model.MemVO;
-import com.mem.model.SendEmail;
 
 /**
  * Servlet implementation class AptServlet
@@ -142,7 +137,7 @@ public class AptServlet extends HttpServlet {
 			if (apt_pic1 != null && apt_pic1.length != 0) {
 				res.getOutputStream().write(apt_pic1);
 			} else {
-				in = req.getServletContext().getResourceAsStream("/img/no image.png");
+				in = req.getServletContext().getResourceAsStream("/img/no_apt.jpg");
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				res.getOutputStream().write(pic);
@@ -158,7 +153,7 @@ public class AptServlet extends HttpServlet {
 			if (apt_pic2 != null && apt_pic2.length != 0) {
 				res.getOutputStream().write(apt_pic2);
 			} else {
-				in = req.getServletContext().getResourceAsStream("/img/no image.png");
+				in = req.getServletContext().getResourceAsStream("/img/no_apt.jpg");
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				res.getOutputStream().write(pic);
@@ -174,11 +169,71 @@ public class AptServlet extends HttpServlet {
 			if (apt_pic3 != null && apt_pic3.length != 0) {
 				res.getOutputStream().write(apt_pic3);
 			} else {
-				in = req.getServletContext().getResourceAsStream("/img/no image.png");
+				in = req.getServletContext().getResourceAsStream("/img/no_apt.jpg");
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				res.getOutputStream().write(pic);
 				in.close();
+			}
+		}
+		if ("getOne_For_Display".equals(action)) { 
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				String str = req.getParameter("ap_no");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("enter ap_no");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				Integer ap_no = null;
+				try {
+					ap_no = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("Incorrect format");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				AptService aptSvc = new AptService();
+				AptVO aptvo = aptSvc.getOneApt(ap_no);
+				if (aptvo == null) {
+					errorMsgs.add("No data");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+//				for backup in case we need something from rating, and we can setAttribute to frontend
+//				RateService ratingSvc = new RateService();
+//				RatingVO ratingCount = ratingSvc.getThisMovieToatalRating(movieno);
+//				req.setAttribute("ratingCount", ratingCount);
+
+				req.setAttribute("aptVO", aptvo); 
+				String url = "/front-end/apt/listOneApt.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add("Cannot retrieve data:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index.jsp");
+				failureView.forward(req, res);
 			}
 		}
 	}

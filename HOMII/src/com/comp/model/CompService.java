@@ -55,4 +55,7 @@ private CompDAO_interface dao;
 		dao.updateRes(compVO);
 		return compVO;
 	}
+	public List<CompVO> getAllLatestCase(){
+		return dao.getAllDesc();
+	}
 }

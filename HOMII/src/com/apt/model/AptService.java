@@ -40,4 +40,11 @@ public class AptService {
 	public List<AptVO> getAllAptByMemNo(Integer member_no){
 		return dao.getAllByMemNo(member_no);
 	}
+	
+	public List<AptVO> getAllTop(){
+		return dao.getAllDesc();
+	}
+	public List<AptVO> getAllBottom(){
+		return dao.getAllAsc();
+	}
 }

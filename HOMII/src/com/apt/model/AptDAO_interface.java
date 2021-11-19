@@ -8,4 +8,6 @@ public interface AptDAO_interface {
 	public AptVO getOnePicByApName (String ap_name);
 	public void insert(AptVO aptVO);
 	public List<AptVO> getAllByMemNo(Integer member_no);
+	public List<AptVO> getAllDesc();
+	public List<AptVO> getAllAsc();
 }

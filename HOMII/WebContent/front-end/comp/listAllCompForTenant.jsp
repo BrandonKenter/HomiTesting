@@ -426,7 +426,7 @@ nav{
 				<td>${compVO.ap_name}</td>
 
 				<td style=" font-size:large;">
-					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/comp/displayOneCompForTenate.jsp?complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
+					<a class="notJQellipsis" href="<%=request.getContextPath()%>/comp/comp.do?action=getOne_For_Display&complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
 				</td>		
 			    <c:choose>
                    <c:when test="${compVO.status==0}">

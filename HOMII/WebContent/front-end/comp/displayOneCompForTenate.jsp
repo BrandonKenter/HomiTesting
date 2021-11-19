@@ -14,10 +14,11 @@
 	}
 	pageContext.setAttribute("memVO", memVO);
 	
-	String test = request.getParameter("complaint_no");
+/* 	String test = request.getParameter("complaint_no");
 	Integer complaint_no = new Integer(test.trim());
-	CompService compSvc = new CompService();
-	CompVO compVO = compSvc.getOneComplaint(complaint_no);
+	CompService compSvc = new CompService(); */
+	CompVO compVO = (CompVO) request.getAttribute("CompVO");
+/* 	CompVO compVO = compSvc.getOneComplaint(complaint_no); */
 	pageContext.setAttribute("compVO", compVO);
 	
 	AptService aptSvc = new AptService();
