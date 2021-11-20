@@ -109,6 +109,7 @@ public class CompServlet extends HttpServlet{
 				byte[] photo = new byte[in.available()];
 				in.read(photo);
 				in.close();
+				
 				Part part2 = req.getPart("video");
 				in = part2.getInputStream();
 				byte[] video = new byte[in.available()];

@@ -41,6 +41,7 @@ public class RegService {
 	public List<RegVO> getAllRegisterByLandName(String land_name){
 		return dao.getAllByLandName(land_name);
 	}
+
 	public List<RegVO> getAllRegisterByLandNameWithApproval(String land_name){
 		return dao.getAllByLandNameWithApproval(land_name);
 	}
@@ -54,6 +55,10 @@ public class RegService {
 		regVO.setStatus(restype);
 		dao.updateRes(regVO);
 		return regVO;
+	}
+	
+	public List<RegVO> getAllRegisterByApName(String ap_name){
+		return dao.getAllByApName(ap_name);
 	}
 
 }
