@@ -1,6 +1,7 @@
 package com.payment.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,15 +16,10 @@ import javax.sql.DataSource;
 
 public class PaymentDAO implements PaymentDAO_interface{
 	
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/HOMII");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://localhost:3306/homii?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "123456";
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO payment (member_no, card_no, card_name, exp_mon, exp_year, csc) VALUES (?, ?, ?, ?, ?, ?)";
@@ -34,13 +30,14 @@ public class PaymentDAO implements PaymentDAO_interface{
 
 
 	@Override
-	public String insert(PaymentVO paymentVO) {
+	public int insert(PaymentVO paymentVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		int num = 0;
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			String cols[]= {"PAY_NO"};
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			
@@ -50,24 +47,17 @@ public class PaymentDAO implements PaymentDAO_interface{
 			pstmt.setString(4, paymentVO.getExp_mon());
 			pstmt.setString(5, paymentVO.getExp_year());
 			pstmt.setString(6, paymentVO.getCsc());
-			pstmt.executeUpdate();
+			num = pstmt.executeUpdate();
 			
-			String next_payno=null;
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if (rs.next()) {
-				next_payno = rs.getString(1);
-				System.out.println("insert" + next_payno +"primary key");
-			} else {
-				System.out.println("No insert");
-			}
-			rs.close();
-			
-			return next_payno;
+
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -84,6 +74,7 @@ public class PaymentDAO implements PaymentDAO_interface{
 				}
 			}
 		}
+		return num;
 	}
 
 
@@ -94,7 +85,8 @@ public class PaymentDAO implements PaymentDAO_interface{
 		boolean result = false;
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, pay_no);
@@ -103,12 +95,18 @@ public class PaymentDAO implements PaymentDAO_interface{
 			int count = pstmt.executeUpdate();
 			if(count > 0) {
 				result = true;
-			} 
+			}
+			else {
+				result = false;
+			}
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -139,7 +137,8 @@ public class PaymentDAO implements PaymentDAO_interface{
 		List<PaymentVO> list = new ArrayList<PaymentVO>();
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, mb_no);
@@ -149,6 +148,7 @@ public class PaymentDAO implements PaymentDAO_interface{
 			while (rs.next()) {
 				paymentVO = new PaymentVO();
 				paymentVO.setPay_no(rs.getInt("pay_no"));
+				paymentVO.setMember_no(rs.getInt("member_no"));
 				paymentVO.setCard_no(rs.getString("card_no"));
 				paymentVO.setCard_name(rs.getString("card_name"));
 				paymentVO.setExp_mon(rs.getString("exp_mon"));
@@ -162,6 +162,9 @@ public class PaymentDAO implements PaymentDAO_interface{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {

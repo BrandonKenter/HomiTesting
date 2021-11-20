@@ -54,10 +54,10 @@ public class AccountActivate  extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemService memSvc = new MemService();
-				MemVO memVO = memSvc.accountActivate(mb_email);
+				 memSvc.accountActivate(mb_email);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
+//				req.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 				
 				successMsgs.add("Your email is activated, please login again.");
 				String url = "/front-end/mem/MemLogin.jsp";

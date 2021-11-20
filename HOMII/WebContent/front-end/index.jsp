@@ -32,7 +32,7 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
-<title>Insert title here</title>
+<title>HOMI</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
