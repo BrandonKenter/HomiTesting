@@ -248,7 +248,7 @@ And two additional features:
 
 If users create their complaint cases with pulic, everyone can read their cases on the index page.
 
-**4.1 public cases are shown on the index page**
+**4.1 Public cases are shown on the index page**
 
 The public cases are shown with three sorting:
 
@@ -264,7 +264,7 @@ The public cases are shown with three sorting:
 
 ![image](https://user-images.githubusercontent.com/91846668/142710736-65b801b0-c05f-4013-8cb2-578e45e42992.png)
 
-**4.2 public cases are shown on the index page**
+**4.2 Read the public cases**
 
 Users can interact with the case tiles in two way:
 
