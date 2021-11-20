@@ -160,6 +160,8 @@ The functions we have now can be summarized in four main features:
 
 - Create complain case & case tracing
 
+- Read pbulic cases
+
 - Rating system
 
 And two additional features:
@@ -242,28 +244,62 @@ And two additional features:
 
  ![image](https://user-images.githubusercontent.com/91846668/140576544-0eac5b88-478f-4f27-9d7e-4b97dd89c367.png)
  
-**4. Rating system**
+**4. Read public cases**
+
+If users create their complaint cases with pulic, everyone can read their cases on the index page.
+
+**4.1 public cases are shown on the index page**
+
+The public cases are shown with three sorting:
+
+1. Top rated first
+
+![image](https://user-images.githubusercontent.com/91846668/142710714-4821bfd5-5387-4db3-a7a0-f9fd6aa08d02.png)
+
+2. Worst rated first
+
+![image](https://user-images.githubusercontent.com/91846668/142710727-cbe24a4b-4ff2-43fd-8a86-d61ac4213fa5.png)
+
+3. Latest posted first
+
+![image](https://user-images.githubusercontent.com/91846668/142710736-65b801b0-c05f-4013-8cb2-578e45e42992.png)
+
+**4.2 public cases are shown on the index page**
+
+Users can interact with the case tiles in two way:
+
+1. Click on "Read More" to read the details of the case.
+
+![image](https://user-images.githubusercontent.com/91846668/142710812-bf0b5808-100c-4bd7-9af1-d7c95609dfb6.png)
+
+2. Click on the apartment name to access the apartment property page.
+
+![image](https://user-images.githubusercontent.com/91846668/142710842-f492e3ab-28b0-4562-9447-31d0b4b576d9.png)
+
+*Since "My property" page will be implemented in the next iteration, the content of apartment will be updated then.
+
+**5. Rating system**
 
 *Please note it's needed to update MySLQ script first: http://tiny.cc/6mpluz)
 
 (Since "My property" is not constructed, the rating function is just for demo)
 
-**4.1 Run the rating page (addRate.jsp) in the project folder**
+**5.1 Run the rating page (addRate.jsp) in the project folder**
 
 (It will be linked through "My property" page in next iteration)
 
 ![image](https://user-images.githubusercontent.com/91846668/142686631-2e17b7ae-e951-41cb-9618-0592d1d53d70.png)
 
-**4.2 Enter the ratings and comments**
+**5.2 Enter the ratings and comments**
 
 ![image](https://user-images.githubusercontent.com/91846668/142686857-81703590-182f-46ca-98d1-24913414af13.png)
 
 
 **[Additional features]**
 
-**5. Apartment management function (for landlord)**
+**6. Apartment management function (for landlord)**
 
-**5.1 Sign up as landlord**
+**6.1 Sign up as landlord**
 
 - Select “landlord” when signing up (as below).
 
@@ -271,7 +307,7 @@ And two additional features:
 
  ![image](https://user-images.githubusercontent.com/91846668/140576579-08a56ad8-7858-4c09-a21d-a622959e66f5.png)
  
-**5.2 Add apartment**
+**6.2 Add apartment**
 
 - Go to “My Property” tab.
 
@@ -281,7 +317,7 @@ And two additional features:
 
  ![image](https://user-images.githubusercontent.com/91846668/140576597-091f7bae-4941-419b-9d45-18bb92adb954.png)
  	
-**5.3 Response complain cases**
+**6.3 Response complain cases**
 
 - Go to “My Property” tab.
 
@@ -292,9 +328,9 @@ And two additional features:
  ![image](https://user-images.githubusercontent.com/91846668/140576625-9004e379-a7f0-45f5-8129-7c8c029ae4cb.png)
 
  
-**6. Payment function**
+**7. Payment function**
 
-**6.1 Add credit card**
+**7.1 Add credit card**
 
 - Go to “Member Center” tab
 
@@ -304,7 +340,7 @@ And two additional features:
 
   ![image](https://user-images.githubusercontent.com/91846668/140576644-7513423f-be9d-41b7-af37-d37073446f0c.png)
  
-**6.2 View balance**
+**7.2 View balance**
 
 - Go to “My rent” tab
 
@@ -312,7 +348,7 @@ And two additional features:
 
   ![image](https://user-images.githubusercontent.com/91846668/140576661-e024f1c8-d50b-41e9-bcb7-ddf6bc6bacb9.png)
  
-**6.3 Pay rental fee**
+**7.3 Pay rental fee**
 
 - Go to “My rent” tab
 
@@ -323,7 +359,7 @@ And two additional features:
   ![image](https://user-images.githubusercontent.com/91846668/140576684-7b27649f-1a33-4e90-a8e7-0c40c45a2f9f.png)
 
 	 
-**6.4 Add fee (for landlord)**
+**7.4 Add fee (for landlord)**
 
 - Go to “Payment System” tab
 
