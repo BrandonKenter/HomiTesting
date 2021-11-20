@@ -35,6 +35,14 @@
     <servlet-name>CommentServlet</servlet-name>
     <url-pattern>/comment/comment.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>RateServlet</servlet-name>
+    <servlet-class>com.rate.controller.RateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RateServlet</servlet-name>
+    <url-pattern>/rate/rate.do</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>CompServlet</servlet-name>
@@ -52,6 +60,15 @@
   <servlet-mapping>
     <servlet-name>AptServlet</servlet-name>
     <url-pattern>/apt/apt.do</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>DBGifReader4</servlet-name>
+    <servlet-class>com.apt.controller.DBGifReader4</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader4</servlet-name>
+    <url-pattern>/apt/DBGifReader4.do</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -410,7 +427,6 @@
     <filter-name>loginFilter</filter-name>
     <url-pattern>/front-end/mem/memberInfo.jsp</url-pattern>
     <url-pattern>/front-end/comp/addComp.jsp</url-pattern>
-    <url-pattern>/front-end/comp/displayOneCompForTenate.jsp</url-pattern>
     <url-pattern>/front-end/comp/listAllCompForLand.jsp</url-pattern>
     <url-pattern>/front-end/comp/listAllCompForTenate.jsp</url-pattern>
     <url-pattern>/front-end/comp/listOneComp.jsp</url-pattern>

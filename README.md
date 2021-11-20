@@ -1,8 +1,6 @@
-# Homie
+# HÖmi
 
-/*
-A README in general provides general info about the project, with detailed set-up and usage instructions. For the spike exercise, just a detailed guide on how to set up the app and run it is sufficient. Basically, explain how i can run the app on my system to evaluate your submission
-*/
+Hello, welcome to HÖmi, this README file provides environment setup procedure & usage instruction.  
 
 ## Intro
 
@@ -76,7 +74,7 @@ export PATH=/usr/local/mysql-8.0.19-macos10.15-x86_64/bin:$PATH
 
 -> click refresh button on the up-right side of left box
 
-(Download MySQL script: http://tiny.cc/3n2kuz)
+(Download MySQL script: http://tiny.cc/6mpluz)
 
 ![image](https://user-images.githubusercontent.com/91846668/136495072-74191733-237f-46ae-8a96-1138f1d8d4ea.png)
 
@@ -139,146 +137,222 @@ There may still have error after doing the procedure above, if it is, please che
 ![image](https://user-images.githubusercontent.com/91846668/136495868-f62c9b8f-f265-4c49-96d6-c9d257a7aebc.png)
 
 
+2.8 Download Google Cloud Tools for Eclipse
+
+In Eclipse, select Help -> Eclipse Marketplace -> Google Cloud Tools for Eclipse 1.8.4 -> Install -> Confirm (this may take a while) -> Accept License -> Select box to trust signers -> Trust Selected
+
+2.9 Restart Eclipse when prompted (or manually)
+
+When opening Eclipse again, wait for Google Cloud SDK to download and configure (this may take a while)
+
+3.0 Add GCP Library to build path
+
+Right click Homii folder in Project Explorer -> Build Path -> Configure Build Path -> Libraries -> Add Library -> Google Cloud Platform Libraries -> Next -> Select "Cloud Storage" -> Finish -> Apply and Close
+
 ## Usage instruction
 
-There are three required functions for this spike exercise: 
 
-* 1.Entering an application to rent a property. 
+The functions we have now can be summarized in four main features: 
 
-  * a. Potential renters who would like to apply can create (or log into) an account, enter their information into a preliminary application, and submit it to rental owners. 
+- Create account & account management 
 
-  * b. Rental owners can accept or reject submitted application.
+- My rental  management
 
-* 2.Paying rent.
+- Create complain case & case tracing
 
-  * a. Your team can simulate a payment system by having users enter FAKE payment information and the system displaying a confirmation message.
+- Rating system
 
-  * b. Every tenant will be able to view their balance on the system.
+And two additional features:
 
-  * c. Owners can add late fees or penalties.
+- Apartment management function (for landlord)
 
-  * d. Owners can also enter payment through their admin accounts.
-
-* 3.Entering notices for maintenance.
-
-  * a. Tenants (logged in) can input a maintenance request and whether it is a priority.
-
-  * b. Owners can review and respond to maintenance requests.
-
-Instructions:
-
-- [x] **1.a create an account**
-
-Click Login button on the up-right corner
-
-![image](https://user-images.githubusercontent.com/91846668/136628541-852e0203-a741-4ddf-b1e1-ce8a871023ef.png)
-
-Log in
-
-![image](https://user-images.githubusercontent.com/91846668/136628739-859d2ec1-02e9-475c-ab6c-28c6c5044c53.png)
-
-*if you forget your password, you can click forget password and you’ll receive a random password via your email, then go to member center change your password.
-
-Sign up
-
-Click sign up -> fill up the information -> Click sign up button below
-
-*The member type you register is important, it would be different privilege between two roles.
-
-*It would show error message if the data formation not as expected.
-
-![image](https://user-images.githubusercontent.com/91846668/136628764-062b601c-28f7-4602-9264-8799f887edf2.png)
-
-Send rental application
-
--> Click “My Rent” to view the rental status -> Click “Register new rent” to apply a new rental
-
-![image](https://user-images.githubusercontent.com/91846668/136628787-e81afaa8-8267-4f10-ac94-29e7f94998e6.png)
-
--> fill up and send the form and the owner will review the application
-
-![image](https://user-images.githubusercontent.com/91846668/136628798-c61b3926-b464-409e-9930-119c68a3ce42.png)
-
-(Extra function) In “My rent” page, tenant can select opened cases to review the status
-
-![image](https://user-images.githubusercontent.com/91846668/136628810-c7605c44-e247-4b39-a98e-6184eb7cb9fc.png)
+- Payment function
 
 
-- [x] **1.b Owner review the rental application**
+**1. Create account & account management**
 
-Once the tenant sent an application, rental owner can get the application in his/her “My property” page.
+**1.1 Sign-up**
 
--> Click the application you want to review
+  - Click Login button on the up-right corner.
 
-![image](https://user-images.githubusercontent.com/91846668/136628856-4c1415cb-b5ef-4ccb-85fe-282442bae6ce.png)
+  - Fill up your personal information
+  
+   ![image](https://user-images.githubusercontent.com/91846668/140576288-89205fa1-0aec-4255-ade6-50d65e88313a.png)
+
+**Error proof function**
+
+- It would show an error message if the data formation is not as expected. (as the red message shown below the texting box)
+
+ ![image](https://user-images.githubusercontent.com/91846668/140576317-9a7abac3-5cc3-4c67-b75e-20dda3e36ea9.png)
+
+**Account activation**
+
+- It is needed to activate your account via auto confirmation mail after sign up.
+
+ ![image](https://user-images.githubusercontent.com/91846668/140576340-92de1ca6-ccf4-4d06-9e36-ad68b8d18754.png)
+
+**1.2 Log in**
+
+- Key in account number & password in “LOG IN” tab.
+
+- Note the account only can be used after activated via confirmation mail.
+
+**1.3 Forget password**
+
+- Click “forget password” (as marked on the image below) and you’ll receive a random password via your email.
+
+ ![image](https://user-images.githubusercontent.com/91846668/140576391-42a27ea4-f59b-4a7e-9696-96eb88ea7cdd.png)
+
  
--> Review the application and select approve or reject 
+**1.4 Change password**
 
-*End data is must be filled.
+- Change your password in “Member center” tab.
 
-![image](https://user-images.githubusercontent.com/91846668/136628867-06021ebf-eb94-4082-8cc8-7a3c60983dcf.png)
+**1.5 Edit personal information**
+
+- Modify personal information in “Member center” tab.
+
+![image](https://user-images.githubusercontent.com/91846668/140576430-7821cf5a-ad3a-4e49-bf0f-39d0bddbafaa.png)
+
+**2. My rental management**
+
+**2.1 set up retal information**
+
+- Click “My Rent” to view the rental status.
+
+- Click “Register new rent” to set your rental information.
+
+![image](https://user-images.githubusercontent.com/91846668/140576468-a8e2bc37-076d-4ef9-a829-69b828fdc22b.png)
+
+![image](https://user-images.githubusercontent.com/91846668/140576491-d8d06e1f-c5cf-499b-bad3-675b0b4d40f9.png)
+
+**3. Create complain case & case tracing**
+
+**3.1 Create a complain case**
+
+- Click the create case on the up-right corner.
+
+- Fill up the information (description, priority, photo, video, etc).
+
+ ![image](https://user-images.githubusercontent.com/91846668/140576523-edfac365-8155-4fc5-abd0-f2bec32274ae.png)
  
-- [x] **2.a Set payment system**
+**3.2 Trace opened cases**
 
-Click "Member center" -> add the credit card information
+- Go to “My rent” tab to check all the cases you have issued.
 
-(it would show error message if the data format is not as expected)
-
-![image](https://user-images.githubusercontent.com/91846668/136628945-6a119bae-4126-48fc-86e7-440441db8c58.png)
-
-- [x] **2.b View balance**
-
-Click “My rent” to view the current balance
-
--> Click “make payment” -> Choose a registered credit card can make payment
-
-*You can see the payment log once after you make payment.
-
-![image](https://user-images.githubusercontent.com/91846668/136628968-3cace25f-1ab6-4286-965c-02a0a9f67224.png)
-
-- [x] **2.c owner add late fees or penalties**
-
-(log in owner account, mail: land1@wisc.edu password:1111)
-
-Click “Payment System” -> select the tenant who you want to add penalties to -> select penalty enter the amount
-
-*Once the amount sent, it would be shown in payment log.
-
-![image](https://user-images.githubusercontent.com/91846668/136628981-2a91c110-6b1b-4c01-803f-97fc790b41de.png)
-
-- [x] **2.d owner enter payment (same page as above)**
-
-(log in owner account, mail: land1@wisc.edu password:1111)
-
-Click “Payment System” -> select the tenant who makes the payment -> select payment -> enter the amount
-
-*Once the amount sent, it would be shown in payment log.
-
-
-
-- [x] **3.a Open a maintenance request**
-
-Click the create case on the up-right corner 
-
--> fill up the information needed (description, photo, video, etc)
-
--> the priority box can define the urgency
-
-![image](https://user-images.githubusercontent.com/91846668/136629015-10b50d36-13e2-4a88-b221-14dc4540133a.png)
+ ![image](https://user-images.githubusercontent.com/91846668/140576544-0eac5b88-478f-4f27-9d7e-4b97dd89c367.png)
  
-- [x] **3.b Owner review & response to requests**
+**4. Rating system**
 
-Click My property (all the apartment and case below to the landlord would be shown in this page) 
+*Please note it's needed to update MySLQ script first: http://tiny.cc/6mpluz)
 
--> click the case you want to read
+(Since "My property" is not constructed, the rating function is just for demo)
 
-![image](https://user-images.githubusercontent.com/91846668/136629036-cbd66f19-7463-4cae-bff4-a29fbcb8c088.png)
+**4.1 Run the rating page (addRate.jsp) in the project folder**
 
--> read the details and response to it
+(It will be linked through "My property" page in next iteration)
 
-![image](https://user-images.githubusercontent.com/91846668/136629062-3e42e3cb-49be-4e80-b405-51426b45322c.png)
+![image](https://user-images.githubusercontent.com/91846668/142686631-2e17b7ae-e951-41cb-9618-0592d1d53d70.png)
 
-(Extra function) Landlord can click “add an apartment” on the up-right corner to register a new apartment
+**4.2 Enter the ratings and comments**
 
-![image](https://user-images.githubusercontent.com/91846668/136629103-d2e38848-c825-4dcc-aa09-25081e391e31.png)
+![image](https://user-images.githubusercontent.com/91846668/142686857-81703590-182f-46ca-98d1-24913414af13.png)
+
+
+**[Additional features]**
+
+**5. Apartment management function (for landlord)**
+
+**5.1 Sign up as landlord**
+
+- Select “landlord” when signing up (as below).
+
+- There would be “My property” tab only for landlords managing their properties.
+
+ ![image](https://user-images.githubusercontent.com/91846668/140576579-08a56ad8-7858-4c09-a21d-a622959e66f5.png)
+ 
+**5.2 Add apartment**
+
+- Go to “My Property” tab.
+
+- Click the “Add an Apartment” on top-right corner.
+
+- Fill up the information of apartment to add new apartment.
+
+ ![image](https://user-images.githubusercontent.com/91846668/140576597-091f7bae-4941-419b-9d45-18bb92adb954.png)
+ 	
+**5.3 Response complain cases**
+
+- Go to “My Property” tab.
+
+- There are all complaint cases related with your apartments listed.
+
+ ![image](https://user-images.githubusercontent.com/91846668/140576611-6cdc4001-23d6-495b-9dbf-415b2e99b5e3.png)
+
+ ![image](https://user-images.githubusercontent.com/91846668/140576625-9004e379-a7f0-45f5-8129-7c8c029ae4cb.png)
+
+ 
+**6. Payment function**
+
+**6.1 Add credit card**
+
+- Go to “Member Center” tab
+
+- Select “Payment” sub-tab
+
+- Add new credit card information
+
+  ![image](https://user-images.githubusercontent.com/91846668/140576644-7513423f-be9d-41b7-af37-d37073446f0c.png)
+ 
+**6.2 View balance**
+
+- Go to “My rent” tab
+
+- The balance is shown in that tab
+
+  ![image](https://user-images.githubusercontent.com/91846668/140576661-e024f1c8-d50b-41e9-bcb7-ddf6bc6bacb9.png)
+ 
+**6.3 Pay rental fee**
+
+- Go to “My rent” tab
+
+- Click “Make a payment” to go to payment page
+
+- Input the amount & select the credit card (the box on the top-right of the image below) to finish the payment
+
+  ![image](https://user-images.githubusercontent.com/91846668/140576684-7b27649f-1a33-4e90-a8e7-0c40c45a2f9f.png)
+
+	 
+**6.4 Add fee (for landlord)**
+
+- Go to “Payment System” tab
+
+- Select the tenant want to charge
+
+- Enter amount
+ 
+ ![image](https://user-images.githubusercontent.com/91846668/140576736-f4affe72-1fb9-46d7-bc92-ddc9dbf451a9.png)
+
+
+
+
+
+## Testing instruction
+
+- As long as you have installed the latest FireFox, Google Chrome, and Safari browser on your PC/laptop, you would be successfully running the Selenium tests. Otherwise, it would cause some errors once you have not installed one of those browsers that we mentioned above. 
+
+- Google Chrome Download Link
+	- Windows: https://www.google.com/intl/en_us/chrome/
+	- MacOS: https://www.google.com/chrome/browser/desktop/index.html
+
+- FireFox Download Link:
+	- https://www.mozilla.org/firefox/download/thanks/
+
+- Safari Download Link:
+	- Windows OS: https://support.apple.com/downloads/safari
+	- MacOS: No need to Download again. 
+
+
+
+
 

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.mem.model.*"%>
 <%@ page import="com.comp.model.*"%>
+<%@ page import="com.rate.model.*"%>
 <%
 	MemVO memVO = (MemVO) session.getAttribute("memVO");
 	if(memVO == null){
@@ -20,7 +21,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
 
-<title>Insert title here</title>
+<title>Rating page</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 /*Contact sectiom*/
@@ -46,7 +47,7 @@ body {
   width: 100vw;
   height: 47vw;
 
-  background-image: url("<%=request.getContextPath()%>/img/complaint form.jpg");
+  background-image: url("<%=request.getContextPath()%>/img/Rate background.jpg");
   background-size:100%;
   	background-attachment:fixed;
 }
@@ -130,7 +131,7 @@ textarea.form-control {
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HÃ¶MI</h2></a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HöMI</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -145,17 +146,7 @@ textarea.form-control {
 	                         	<li><a class="nav-link active" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Member Center</a></li>
 	                         </c:otherwise>
 	                    </c:choose>    	
-                   </li>
-		   <li class="nav-item">
-	                    <c:choose>
-	                         <c:when test="${memVO==null || memVO.member_no==99 }">
-	                               <li><a class="nav-link" aria-current="page" href="#" onclick="loginFirst()">My Archive</a></li>
-	                         </c:when>
-	                         <c:otherwise>
-	                         	<li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/archive/myArchive.jsp">My Archive</a></li>
-	                         </c:otherwise>
-	                    </c:choose>    	
-                   </li>
+                    </li>
                    <li class="nav-item">
                     	<c:choose>
 	                         <c:when test="${memVO==null || memVO.member_no==99 }">
@@ -214,7 +205,7 @@ textarea.form-control {
                         <a class="nav-link text-white" aria-current="page" href="#" onclick="loginFirst()">Create case</a>
                      </c:when>
                      <c:otherwise>
-                     	<a class="nav-link text-white" aria-current="page" href="<%=request.getContextPath()%>/front-end/comp/addComp.jsp">Create case</a>
+                     	<a class="nav-link text-white" aria-current="page" href="<%=request.getContextPath()%>/front-end/rate/addRate.jsp">Create case</a>
                      </c:otherwise>
                 </c:choose> 
                 <a class="nav-link text-white" href="#">|</a>
@@ -259,10 +250,10 @@ textarea.form-control {
 		</ul>
 	</c:if>
 </div>
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/comp/comp.do" name="form2" enctype="multipart/form-data" data-toggle="validator">  
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/rate/rate.do" name="form2" enctype="multipart/form-data" data-toggle="validator">  
 	<section id="contact">
 			<div class="section-content">
-				<h1 class="section-header">Complaint case form </h1>
+				<h1 class="section-header">Rate my apartment </h1>
 			</div>
 			<div class="contact-section">
 			<div class="container">
@@ -270,55 +261,58 @@ textarea.form-control {
 				<form>
 				<div class="row">
 					<div class="col-md-6">
-					<p>Apartment Info</p>
+					<u><b><p>Personal Info</p></b></u>
+								
 						<div class="form-group">
 					    	<label for="username">User Name</label>
 					    	<span><input type="text" class="form-control" value="<%= (memVO==null)? "" : memVO.getMb_name()%>" id="username"  disabled="disabled"></span>
 					    	<input type="hidden" name="memNo" value="${memVO.member_no}">
 			  			</div>
-			  			<div class="form-group">
-			  				<label for="apName">Apartment Name</label>
-					    	<span><input type="text" class="form-control" name="apName" value="" id="apName" placeholder=" Enter Apartment Name"></span>
-				  		</div>
-				  		<div class="form-group">
-					    	<label for="apAddress">Apartment Address</label>
-					    	<span><input type="text" class="form-control" name="apAddress" value="" id="apAddress" placeholder=" Enter Apartment Address"></span>
-					  	</div>
-					  	<div class="form-group">
-					    	<label for="landname">Landlord Name</label>
-					    	<span><input type="text" class="form-control" name="landName" value="" id="landname" placeholder=" Enter Landlord Name" ></span>
+			  			
+						<div class="form-group">
+					    	<label for="username">Apartment Name</label>
+					    	<span><input type="text" class="form-control" value="<%= (memVO==null)? "" : memVO.getMb_name()%>" id="username"  disabled="disabled"></span>
+					    	<input type="hidden" name="memNo" value="${memVO.member_no}">
 			  			</div>
-			  		</div>
+			  			
+			  			<div class="form-group">
+			  				<label for ="comment">Comment</label>
+			  			 	<span><textarea  class="form-control" name="comment" id="comment" placeholder="Enter Comments "></textarea></span>
+				  		</div>			  			
+			  			
+			  			
+			  		</div>			  					  		
 			  		<div class="col-md-6">
-			  		<p>Case Info</p>
+			  		<u><b><p>Rate this apartment</p></b></u>
+
 			  			<div class="form-group">
-			  				<label for="title">Case title</label>
-					    	<span><input type="text" class="form-control" name="caseTitle" id="title" placeholder=" Enter Case Title"></span>
+			  				<label for="rate_price">Rental Cost</label>
+					    	<span><input type="text" class="form-control" name="rate_price" value="" id="rate_price" placeholder=" Enter 1-5 stars"></span>
 				  		</div>
 			  			<div class="form-group">
-			  				<label for ="description">Description</label>
-			  			 	<span><textarea  class="form-control" name="description" id="description" placeholder="Enter Case Description "></textarea></span>
-			  			</div>
+			  				<label for="rate_location">Location</label>
+					    	<span><input type="text" class="form-control" name="rate_location" value="" id="rate_location" placeholder=" Enter 1-5 stars"></span>
+				  		</div>				  		
 			  			<div class="form-group">
-			  				<label for ="priority">Priority (0-5:urgent)</label>
-			  			 	<span><input type="text" class="form-control" name="priority" id="priority" placeholder=" Enter Case Priority"></span>
-			  			</div>
-			  			<div class="form-group">
-			  				<label for="photo">Photo</label>
-					    	<span><input id="photo" type="file" name="photo" class="input" accept="image/*"></span>
+			  				<label for="rate_clean">Cleanness</label>
+					    	<span><input type="text" class="form-control" name="rate_clean" value="" id="rate_clean" placeholder=" Enter 1-5 stars"></span>
 				  		</div>
 			  			<div class="form-group">
-			  				<label for="video">Video</label>
-					    	<span><input id="video" type="file" name="video" class="input" accept="video/*"></span>
+			  				<label for="rate_service">Service</label>
+					    	<span><input type="text" class="form-control" name="rate_service" value="" id="rate_service" placeholder=" Enter 1-5 stars"></span>
 				  		</div>
+			  			<div class="form-group">
+			  				<label for="rate_handletime">Handling Time</label>
+					    	<span><input type="text" class="form-control" name="rate_handletime" value="" id="rate_handletime" placeholder=" Enter 1-5 stars"></span>
+				  		</div>				  		
 					</div>
 					</div>
-					<div>
-						<p class="askPubType">Do you want publish your case in  <input  type="radio" name="pubType" value="0"> public &nbsp<input  type="radio" name="pubType" value="1"> private &nbsp ?</p>
+					<div>	
+						<center><p>Thanks for your rating!</p></center>					
 					</div>
 			  		<div align="center">
 			  			<input type="hidden" name="action" value="insert">
-			  			<input type="submit" class="btn btn-primary submit" value="Send your case">
+			  			<input type="submit" class="btn btn-primary submit" value="Send">
 			  		</div>
 				</form>
 				</div>
@@ -331,14 +325,62 @@ textarea.form-control {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
 
-$("#priority").change(function(){
-	var p = $("#priority").val();
+$("#rate_price").change(function(){
+	var p = $("#rate_price").val();
 	console.log(parseInt(p));
 	if (isNaN(parseInt(p))){
 		Swal.fire('Please enter digit only');
 	}
 	if (parseInt(p) > 5 || parseInt(p) < 0){
-		Swal.fire('Priority range is 0 ~ 5');
+		Swal.fire('range is 0 ~ 5');
+	}
+	
+})
+
+$("#rate_location").change(function(){
+	var p = $("#rate_location").val();
+	console.log(parseInt(p));
+	if (isNaN(parseInt(p))){
+		Swal.fire('Please enter digit only');
+	}
+	if (parseInt(p) > 5 || parseInt(p) < 0){
+		Swal.fire('range is 0 ~ 5');
+	}
+	
+})
+
+$("#rate_service").change(function(){
+	var p = $("#rate_service").val();
+	console.log(parseInt(p));
+	if (isNaN(parseInt(p))){
+		Swal.fire('Please enter digit only');
+	}
+	if (parseInt(p) > 5 || parseInt(p) < 0){
+		Swal.fire('range is 0 ~ 5');
+	}
+	
+})
+
+$("#rate_price").change(function(){
+	var p = $("#rate_price").val();
+	console.log(parseInt(p));
+	if (isNaN(parseInt(p))){
+		Swal.fire('Please enter digit only');
+	}
+	if (parseInt(p) > 5 || parseInt(p) < 0){
+		Swal.fire('range is 0 ~ 5');
+	}
+	
+})
+
+$("#rate_handletime").change(function(){
+	var p = $("#rate_handletime").val();
+	console.log(parseInt(p));
+	if (isNaN(parseInt(p))){
+		Swal.fire('Please enter digit only');
+	}
+	if (parseInt(p) > 5 || parseInt(p) < 0){
+		Swal.fire('range is 0 ~ 5');
 	}
 	
 })

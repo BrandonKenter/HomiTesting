@@ -14,10 +14,11 @@
 	}
 	pageContext.setAttribute("memVO", memVO);
 	
-	String test = request.getParameter("complaint_no");
+/* 	String test = request.getParameter("complaint_no");
 	Integer complaint_no = new Integer(test.trim());
-	CompService compSvc = new CompService();
-	CompVO compVO = compSvc.getOneComplaint(complaint_no);
+	CompService compSvc = new CompService(); */
+	CompVO compVO = (CompVO) request.getAttribute("CompVO");
+/* 	CompVO compVO = compSvc.getOneComplaint(complaint_no); */
 	pageContext.setAttribute("compVO", compVO);
 	
 	AptService aptSvc = new AptService();
@@ -127,7 +128,7 @@ nav{
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HöMI</h2></a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HÃ¶MI</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -140,6 +141,16 @@ nav{
 	                         </c:when>
 	                         <c:otherwise>
 	                         	<li><a class="nav-link active" aria-current="page" href="<%=request.getContextPath()%>/front-end/mem/memberInfo.jsp">Member Center</a></li>
+	                         </c:otherwise>
+	                    </c:choose>    	
+                    </li>
+		    <li class="nav-item">
+	                    <c:choose>
+	                         <c:when test="${memVO==null || memVO.member_no==99 }">
+	                               <li><a class="nav-link" aria-current="page" href="#" onclick="loginFirst()">My Archive</a></li>
+	                         </c:when>
+	                         <c:otherwise>
+	                         	<li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/archive/myArchive.jsp">My Archive</a></li>
 	                         </c:otherwise>
 	                    </c:choose>    	
                     </li>
