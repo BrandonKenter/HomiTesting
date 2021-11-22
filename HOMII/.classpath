@@ -14,7 +14,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/Users/deanh/eclipse-works-cs564/javax.mail.jar"/>
 	<classpathentry kind="lib" path="/Users/deanh/eclipse-works-cs564/jstl-api-1.2-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
@@ -38,7 +37,5 @@
 	<classpathentry kind="lib" path="/Users/deanh/eclipse-works-cs564/HOMII/selenium-java-3.9.1/libs/httpcore-4.4.6.jar"/>
 	<classpathentry kind="lib" path="/Users/deanh/eclipse-works-cs564/HOMII/selenium-java-3.9.1/libs/okhttp-3.9.1.jar"/>
 	<classpathentry kind="lib" path="/Users/deanh/eclipse-works-cs564/HOMII/selenium-java-3.9.1/libs/okio-1.13.0.jar"/>
-=======
->>>>>>> main
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
