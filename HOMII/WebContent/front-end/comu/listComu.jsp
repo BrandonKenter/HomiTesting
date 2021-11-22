@@ -256,7 +256,7 @@ nav{
 <body onload="connect();" onunload="disconnect();">
 <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HöMI</h2></a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/front-end/index.jsp"><h2 class="text-white headfont">HÃ¶MI</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -272,8 +272,6 @@ nav{
 	                         </c:otherwise>
 	                    </c:choose>    	
                     </li>
-<<<<<<< HEAD
-=======
 		    <li class="nav-item">
 	                    <c:choose>
 	                         <c:when test="${memVO==null || memVO.member_no==99 }">
@@ -284,7 +282,6 @@ nav{
 	                         </c:otherwise>
 	                    </c:choose>    	
                     </li>
->>>>>>> main
                     <li class="nav-item">
                     	<c:choose>
 	                         <c:when test="${memVO==null || memVO.member_no==99 }">
@@ -305,11 +302,6 @@ nav{
 	                    </c:choose> 
                     </li>
                     <li class="nav-item">
-<<<<<<< HEAD
-	                    <c:choose>
-	                         <c:when test="${memVO.membership == 1 }">
-	                         <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
-=======
                     	<c:choose>
 	                         <c:when test="${memVO==null || memVO.member_no==99 }">
 	                               <li><a class="nav-link" aria-current="page" href="#" onclick="loginFirst()">My community</a></li>
@@ -327,7 +319,6 @@ nav{
 	                    <c:choose>
 	                         <c:when test="${memVO.membership == 1 }">
 	                          <li><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/front-end/IIPay/Pay.jsp">Payment System</a></li>
->>>>>>> main
 	                         </c:when>
 	                         <c:otherwise>
 	                         </c:otherwise>
@@ -375,11 +366,8 @@ nav{
 						</c:when>
 						<c:otherwise>
 								<img src="${pageContext.request.contextPath}/mem/DBGifReader4.do?member_no=${memVO.member_no}" 
-<<<<<<< HEAD
-									id="${memVO.member_no}" alt=" width="60px;" height="60px" 
-=======
+
 									id="${memVO.member_no}" alt=" width="50px;" height="50px" 
->>>>>>> main
 									class="clickable" />
 								<a class="text-white" id="welcome"> ${memVO.mb_name} &nbsp</a>
 								<a id="logout-btn" href="<%=request.getContextPath()%>/front-end/mem/MemLogout.jsp"> Logout </a>
@@ -392,10 +380,6 @@ nav{
             </div>
         </div>
     </nav>
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 <div class="container-fluid forum-body" style="min-height:450px;">
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">Fix error as below:</font>
@@ -504,11 +488,7 @@ nav{
 				<td>${memSvc.getOneMem(compVO.member_no).mb_name}</td>
 
 				<td style=" font-size:large;">
-<<<<<<< HEAD
-					<a class="notJQellipsis" href="<%=request.getContextPath()%>/front-end/comp/displayOneCompForTenate.jsp?complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
-=======
 					<a class="notJQellipsis" href="<%=request.getContextPath()%>/comp/comp.do?action=getOne_For_Display&complaint_no=${compVO.complaint_no}">${compVO.case_title}</a>
->>>>>>> main
 				</td>		
 			    <c:choose>
                    <c:when test="${compVO.status==0}">
@@ -823,8 +803,4 @@ function loginFirst(){
 	</c:if>
 	</script>	
 	
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> main
