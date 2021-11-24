@@ -164,6 +164,8 @@ The functions we have now can be summarized in four main features:
 
 - Rating system
 
+- MY community
+
 And two additional features:
 
 - Apartment management function (for landlord)
@@ -294,12 +296,39 @@ Users can interact with the case tiles in two way:
 
 ![image](https://user-images.githubusercontent.com/91846668/142686857-81703590-182f-46ca-98d1-24913414af13.png)
 
+**6. My community**
+
+with this function tenants can chat with the other tenants live in the same building.
+
+**6.1 View the community page**
+
+- Go to "My community" tab
+
+- All the user in this building would be shown on your neighbors panel
+
+- Green light represents the status of tenants (green for on-line, grey for off-line)
+
+![image](https://user-images.githubusercontent.com/91846668/143293196-a3ce7afc-6846-477e-91b5-e66c81ffcd7c.png)
+
+![image](https://user-images.githubusercontent.com/91846668/143293216-fa619d81-0645-4001-b3dd-7f239e77639d.png)
+
+**6.2 Chat with your neighbors**
+
+- You can chat with the tenant after clicking the name
+
+*you can use existing members who have already been in same building to do the test:
+
+Account1: mem1@wisc.edu Password: 1111
+
+Account2: mem2@wisc.edu Password: 1111
+
+![image](https://user-images.githubusercontent.com/91846668/143293244-87924f0f-0407-4522-b17d-e584192287a6.png)
 
 **[Additional features]**
 
-**6. Apartment management function (for landlord)**
+**7. Apartment management function (for landlord)**
 
-**6.1 Sign up as landlord**
+**7.1 Sign up as landlord**
 
 - Select “landlord” when signing up (as below).
 
@@ -307,7 +336,7 @@ Users can interact with the case tiles in two way:
 
  ![image](https://user-images.githubusercontent.com/91846668/140576579-08a56ad8-7858-4c09-a21d-a622959e66f5.png)
  
-**6.2 Add apartment**
+**7.2 Add apartment**
 
 - Go to “My Property” tab.
 
@@ -317,7 +346,7 @@ Users can interact with the case tiles in two way:
 
  ![image](https://user-images.githubusercontent.com/91846668/140576597-091f7bae-4941-419b-9d45-18bb92adb954.png)
  	
-**6.3 Response complain cases**
+**7.3 Response complain cases**
 
 - Go to “My Property” tab.
 
@@ -328,9 +357,9 @@ Users can interact with the case tiles in two way:
  ![image](https://user-images.githubusercontent.com/91846668/140576625-9004e379-a7f0-45f5-8129-7c8c029ae4cb.png)
 
  
-**7. Payment function**
+**8. Payment function**
 
-**7.1 Add credit card**
+**8.1 Add credit card**
 
 - Go to “Member Center” tab
 
@@ -340,7 +369,7 @@ Users can interact with the case tiles in two way:
 
   ![image](https://user-images.githubusercontent.com/91846668/140576644-7513423f-be9d-41b7-af37-d37073446f0c.png)
  
-**7.2 View balance**
+**8.2 View balance**
 
 - Go to “My rent” tab
 
@@ -348,7 +377,7 @@ Users can interact with the case tiles in two way:
 
   ![image](https://user-images.githubusercontent.com/91846668/140576661-e024f1c8-d50b-41e9-bcb7-ddf6bc6bacb9.png)
  
-**7.3 Pay rental fee**
+**8.3 Pay rental fee**
 
 - Go to “My rent” tab
 
@@ -359,7 +388,7 @@ Users can interact with the case tiles in two way:
   ![image](https://user-images.githubusercontent.com/91846668/140576684-7b27649f-1a33-4e90-a8e7-0c40c45a2f9f.png)
 
 	 
-**7.4 Add fee (for landlord)**
+**8.4 Add fee (for landlord)**
 
 - Go to “Payment System” tab
 
@@ -368,8 +397,6 @@ Users can interact with the case tiles in two way:
 - Enter amount
  
  ![image](https://user-images.githubusercontent.com/91846668/140576736-f4affe72-1fb9-46d7-bc92-ddc9dbf451a9.png)
-
-
 
 
 
