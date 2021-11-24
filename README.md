@@ -388,6 +388,12 @@ Users can interact with the case tiles in two way:
 	- Windows OS: https://support.apple.com/downloads/safari
 	- MacOS: No need to Download again. 
 
+## By Running Our Project(Another way to test our project)
+
+- Tester could directly run the "index.jsp" by Tomcat Server through your default browser in your PC or labtop. The "index.jsp" is located at "Webcontent" -> "frontend"
+
+- Or, Tester could go to "test" -> "com" -> "selenium" -> "chromedriver"/"firefoxdriver"/"safaridriver" -> "laughbrowser", and run it by using java application. 
+
 
 **Note**
 - In order to open this project in Safari browser, pleas make sure you turn-on the develop mode in your Safari browser. Otherwise, you won't be able to open our prject by using Safari. 
@@ -398,9 +404,3 @@ Users can interact with the case tiles in two way:
 	- Click "Advanced"
 	- Check the "Show Develop on the Menu Bar"
 	- Click Develop, and Check "Allow Remote Automation"
-
-
-
-
-
-
